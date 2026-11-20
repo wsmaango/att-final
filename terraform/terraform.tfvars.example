@@ -1,0 +1,21 @@
+# 이 파일을 terraform.tfvars 로 복사해 값을 채운다. terraform.tfvars 는 커밋·제출 금지(.gitignore).
+# API 키는 여기 넣지 않는다 → CLOUDSTACK_API_URL / CLOUDSTACK_API_KEY / CLOUDSTACK_SECRET_KEY 환경변수.
+
+project = "att-32xxxxxx"   # 서비스약칭-학번
+owner   = "32xxxxxx"
+
+zone             = "DKU"
+template         = "Ubuntu_24.04"            # 콘솔 템플릿 목록의 정확한 이름
+network_offering = "DefaultIsolatedNetworkOfferingWithSourceNatService"
+
+admin_cidrs   = ["10.8.0.0/24"]             # VPN 대역 (W1)
+service_cidrs = ["0.0.0.0/0"]
+
+entry_mode = "vr_lb"                        # 오퍼링에 LB 가 없으면 "port_forward"
+entry_lb   = "lb01"
+
+ssh_public_key_path = "~/.ssh/id_ed25519.pub"
+
+# 시크릿은 아래 대신 환경변수 권장: export TF_VAR_redis_password=... TF_VAR_db_password=... (영문·숫자 12~40자)
+redis_password = "CHANGEMEdummy123"
+db_password    = "CHANGEMEdummy456"

@@ -1,0 +1,67 @@
+# W6 A7 알림 룰 확장. SLO(리포트 ④)와 숫자를 맞춘다.
+groups:
+  - name: availability
+    rules:
+      - alert: InstanceDown
+        expr: up == 0
+        for: 1m
+        labels: { severity: critical }
+        annotations:
+          summary: "{{ $labels.job }} {{ $labels.instance }} 1분 이상 응답 없음"
+      - alert: AppBackendsDegraded
+        expr: count(up{job="app"} == 1) < 2
+        for: 1m
+        labels: { severity: warning }
+        annotations:
+          summary: "정상 app 노드가 2대 미만 (이중화 깨짐)"
+
+  - name: slo
+    rules:
+      # SLI: 5xx 가 아닌 응답 비율 / SLO 99.9%
+      - record: att:error_ratio:5m
+        expr: |
+          sum(rate(att_http_requests_total{status=~"5.."}[5m]))
+          / clamp_min(sum(rate(att_http_requests_total[5m])), 1e-9)
+      - alert: ErrorBudgetBurnFast
+        expr: att:error_ratio:5m > 0.01
+        for: 2m
+        labels: { severity: critical }
+        annotations:
+          summary: "5xx 비율 {{ $value | humanizePercentage }} (SLO 99.9% 예산 빠르게 소진)"
+      # SLI: 출근 체크 p95 지연 / SLO 500ms
+      - record: att:clock_p95_seconds:5m
+        expr: |
+          histogram_quantile(0.95,
+            sum by (le) (rate(att_http_request_duration_seconds_bucket{endpoint="/api/clock"}[5m])))
+      - alert: ClockLatencyHigh
+        expr: att:clock_p95_seconds:5m > 0.5
+        for: 3m
+        labels: { severity: warning }
+        annotations:
+          summary: "/api/clock p95 {{ $value }}s > 500ms (출근 시간대 SLO 위반 위험)"
+      # 출근 기록 유실 0: 스풀에 남은 건이 있으면 DB 가 아직 안 받는 중
+      - alert: ClockSpoolBacklog
+        expr: sum(att_spool_pending) > 0
+        for: 2m
+        labels: { severity: critical }
+        annotations:
+          summary: "DB 미적재 출근 기록 {{ $value }}건이 app 노드 디스크에 대기 중"
+      - record: att:cache_hit_ratio:5m
+        expr: |
+          sum(rate(att_cache_total{result="hit"}[5m]))
+          / clamp_min(sum(rate(att_cache_total[5m])), 1e-9)
+
+  - name: resources
+    rules:
+      - alert: DiskUsageHigh
+        expr: (1 - node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"}) > 0.8
+        for: 5m
+        labels: { severity: warning }
+        annotations:
+          summary: "{{ $labels.instance }} 디스크 80% 초과"
+      - alert: BackupStale
+        expr: time() - att_backup_last_success_timestamp > 1800
+        for: 5m
+        labels: { severity: critical }
+        annotations:
+          summary: "마지막 백업 성공이 30분 이상 지남 (RPO 15분 위반 위험)"

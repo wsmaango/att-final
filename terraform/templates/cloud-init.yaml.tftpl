@@ -1,0 +1,30 @@
+#cloud-config
+hostname: ${hostname}
+package_update: true
+
+write_files:
+  - path: /etc/att/bootstrap.env
+    permissions: "0600"
+    owner: root:root
+    content: |
+      ROLE="${role}"
+      NODE="${hostname}"
+      SELF_IP="${self_ip}"
+      MON_IP="${topology.mon_ip}"
+      DATA_IP="${topology.data_ip}"
+      LB_IPS="${join(" ", topology.lb_ips)}"
+      APP_IPS="${join(" ", topology.app_ips)}"
+      ALL_IPS="${join(" ", topology.all_ips)}"
+      NET_CIDR="${topology.net_cidr}"
+      REDIS_PASSWORD="${redis_password}"
+      DB_PASSWORD="${db_password}"
+%{ for path, content in files ~}
+  - path: ${path}
+    permissions: "0755"
+    encoding: gz+b64
+    content: ${base64gzip(content)}
+%{ endfor ~}
+
+runcmd:
+  - [bash, /opt/bootstrap/common.sh]
+  - [bash, /opt/bootstrap/${role}.sh]

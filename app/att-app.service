@@ -1,0 +1,25 @@
+[Unit]
+Description=Event reservation API (gunicorn)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=att
+Group=att
+WorkingDirectory=/opt/att
+# 시크릿은 별도 파일 (chmod 600, owner att) - W7 Part D
+EnvironmentFile=/etc/att/app.env
+# 워커 1개 + 스레드: prometheus_client 를 multiprocess 모드 없이 쓰기 위함
+ExecStart=/opt/att/venv/bin/gunicorn --workers 1 --threads 8 --bind ${BIND_ADDR}:5000 --access-logfile - app:app
+Restart=always
+RestartSec=2
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+# 출근 기록 임시 보관(DB 장애 시 스풀) - /var/lib/att, owner att
+StateDirectory=att
+StateDirectoryMode=0750
+
+[Install]
+WantedBy=multi-user.target
