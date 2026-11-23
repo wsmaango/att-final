@@ -1,0 +1,77 @@
+# command : checkov -d terraform --external-checks-dir terraform/policies --skip-path policies/tests --compact
+# time    : 2026-11-23T17:27:14+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+
+       _               _
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V /
+  \___|_| |_|\___|\___|_|\_\___/ \_/
+
+By Prisma Cloud | version: 3.4.6 
+
+secrets scan results:
+
+Passed checks: 0, Failed checks: 2, Skipped checks: 0
+
+Check: CKV_SECRET_6: "Base64 High Entropy String"
+	FAILED for resource: 6b1c51b0767640ba28ed7e1df93e7aac614bfdd0
+	File: /tests/policy.tftest.hcl:10-11
+	Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/secrets-policies/secrets-policy-index/git-secrets-6
+Check: CKV_SECRET_6: "Base64 High Entropy String"
+	FAILED for resource: 814d9776fedcf85dbd37bb646b5014dabbfdc7a8
+	File: /tests/policy.tftest.hcl:11-12
+	Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/secrets-policies/secrets-policy-index/git-secrets-6
+terraform scan results:
+
+Passed checks: 15, Failed checks: 0, Skipped checks: 0
+
+Check: CKV_ATT_4: "ATT4: Egress 는 포트를 지정해야 한다 (protocol all 금지)"
+	PASSED for resource: cloudstack_egress_firewall.main
+	File: /main.tf:67-81
+Check: CKV_ATT_2: "ATT2: VM 에 project·owner·role 태그 필수"
+	PASSED for resource: cloudstack_instance.node["app01"]
+	File: /main.tf:94-127
+Check: CKV_ATT_3: "ATT3: VM 오퍼링은 Small·Medium 까지만 (비용 상한)"
+	PASSED for resource: cloudstack_instance.node["app01"]
+	File: /main.tf:94-127
+Check: CKV_ATT_1: "ATT1: x.x.x.x/0 에는 80·443 만 열 수 있다 (SSH·관측 포트 전체 공개 금지)"
+	PASSED for resource: cloudstack_firewall.service
+	File: /main.tf:209-217
+Check: CKV_ATT_1: "ATT1: x.x.x.x/0 에는 80·443 만 열 수 있다 (SSH·관측 포트 전체 공개 금지)"
+	PASSED for resource: cloudstack_firewall.mgmt
+	File: /main.tf:257-265
+Check: CKV_ATT_2: "ATT2: VM 에 project·owner·role 태그 필수"
+	PASSED for resource: cloudstack_instance.node["app02"]
+	File: /main.tf:94-127
+Check: CKV_ATT_3: "ATT3: VM 오퍼링은 Small·Medium 까지만 (비용 상한)"
+	PASSED for resource: cloudstack_instance.node["app02"]
+	File: /main.tf:94-127
+Check: CKV_ATT_2: "ATT2: VM 에 project·owner·role 태그 필수"
+	PASSED for resource: cloudstack_instance.node["data01"]
+	File: /main.tf:94-127
+Check: CKV_ATT_3: "ATT3: VM 오퍼링은 Small·Medium 까지만 (비용 상한)"
+	PASSED for resource: cloudstack_instance.node["data01"]
+	File: /main.tf:94-127
+Check: CKV_ATT_2: "ATT2: VM 에 project·owner·role 태그 필수"
+	PASSED for resource: cloudstack_instance.node["lb01"]
+	File: /main.tf:94-127
+Check: CKV_ATT_3: "ATT3: VM 오퍼링은 Small·Medium 까지만 (비용 상한)"
+	PASSED for resource: cloudstack_instance.node["lb01"]
+	File: /main.tf:94-127
+Check: CKV_ATT_2: "ATT2: VM 에 project·owner·role 태그 필수"
+	PASSED for resource: cloudstack_instance.node["lb02"]
+	File: /main.tf:94-127
+Check: CKV_ATT_3: "ATT3: VM 오퍼링은 Small·Medium 까지만 (비용 상한)"
+	PASSED for resource: cloudstack_instance.node["lb02"]
+	File: /main.tf:94-127
+Check: CKV_ATT_2: "ATT2: VM 에 project·owner·role 태그 필수"
+	PASSED for resource: cloudstack_instance.node["mon01"]
+	File: /main.tf:94-127
+Check: CKV_ATT_3: "ATT3: VM 오퍼링은 Small·Medium 까지만 (비용 상한)"
+	PASSED for resource: cloudstack_instance.node["mon01"]
+	File: /main.tf:94-127
+
+
+# exit    : 1

@@ -1,0 +1,7 @@
+# command : terraform -chdir=terraform fmt -check -recursive && echo "fmt OK"
+# time    : 2026-11-23T17:27:03+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+fmt OK
+
+# exit    : 0
