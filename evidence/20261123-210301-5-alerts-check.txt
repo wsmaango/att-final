@@ -1,0 +1,14 @@
+# command : scripts/promq.sh "max_over_time(ALERTS[40m])"
+# time    : 2026-11-23T21:03:01+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+query: max_over_time(ALERTS[40m])
+{"alertname":"AppBackendsDegraded","alertstate":"firing","severity":"warning"}  1
+{"alertname":"AppBackendsDegraded","alertstate":"pending","severity":"warning"}  1
+{"alertname":"ClockLatencyHigh","alertstate":"firing","severity":"warning"}  1
+{"alertname":"ClockLatencyHigh","alertstate":"pending","severity":"warning"}  1
+{"alertname":"ClockSpoolBacklog","alertstate":"pending","severity":"critical"}  1
+{"alertname":"InstanceDown","alertstate":"firing","instance":"192.168.0.11:5000","job":"app","severity":"critical"}  1
+{"alertname":"InstanceDown","alertstate":"pending","instance":"192.168.0.10:5000","job":"app","severity":"critical"}  1
+
+# exit    : 0

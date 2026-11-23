@@ -1,0 +1,8 @@
+# command : for p in 2201 2202; do echo "== lb$((p-2200))"; ssh -p $p ubuntu@$MGMT "sudo awk '{print substr(\$2,13,5)}' /var/log/nginx/att_access.log | grep -E \"^20:(4[89]|5[0-4])\" | sort | uniq -c"; done
+# time    : 2026-11-23T20:58:17+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+== lb1
+== lb2
+
+# exit    : 0

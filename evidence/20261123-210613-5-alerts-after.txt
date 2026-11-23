@@ -1,0 +1,12 @@
+# command : scripts/promq.sh "max_over_time(ALERTS{alertname=\"DatabaseUnreachable\"}[3m])"; scripts/promq.sh "max_over_time(att_db_up[3m]) - min_over_time(att_db_up[3m])"
+# time    : 2026-11-23T21:06:13+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+query: max_over_time(ALERTS{alertname="DatabaseUnreachable"}[3m])
+{"alertname":"DatabaseUnreachable","alertstate":"firing","severity":"critical"}  1
+{"alertname":"DatabaseUnreachable","alertstate":"pending","severity":"critical"}  1
+query: max_over_time(att_db_up[3m]) - min_over_time(att_db_up[3m])
+{"instance":"192.168.0.10:5000","job":"app"}  1
+{"instance":"192.168.0.11:5000","job":"app"}  1
+
+# exit    : 0

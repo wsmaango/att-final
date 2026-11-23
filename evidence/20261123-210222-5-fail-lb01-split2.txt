@@ -1,0 +1,18 @@
+# command : for p in 2201 2202; do echo "== lb$((p-2200)) (UTC, 한국시간 = +9h)"; ssh -p $p ubuntu@$MGMT "sudo awk '{print substr(\$2,13,5)}' /var/log/nginx/att_access.log | grep -E \"^11:(4[89]|5[0-4])\" | sort | uniq -c"; done
+# time    : 2026-11-23T21:02:22+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+== lb1 (UTC, 한국시간 = +9h)
+    120 11:48
+      2 11:49
+     42 11:50
+     50 11:53
+== lb2 (UTC, 한국시간 = +9h)
+    119 11:48
+      3 11:49
+     46 11:50
+     83 11:51
+    237 11:52
+     58 11:53
+
+# exit    : 0

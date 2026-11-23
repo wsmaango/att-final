@@ -10,10 +10,24 @@ groups:
           summary: "{{ $labels.job }} {{ $labels.instance }} 1분 이상 응답 없음"
       - alert: AppBackendsDegraded
         expr: count(up{job="app"} == 1) < 2
-        for: 1m
+        for: 15s  # 5단계: 1m 이면 40초 장애를 못 잡았다 (pending 에서 끝남)
         labels: { severity: warning }
         annotations:
           summary: "정상 app 노드가 2대 미만 (이중화 깨짐)"
+      # 5단계에서 추가: nginx 만 죽으면 exporter 는 살아 있어 up 으로는 안 보인다
+      - alert: LbNginxDown
+        expr: nginx_up == 0
+        for: 15s
+        labels: { severity: warning }
+        annotations:
+          summary: "lb {{ $labels.instance }} nginx 응답 없음 (VR 이 나머지 lb 로 우회 중)"
+      # 5단계에서 추가: DB 가 죽어도 스풀 덕분에 오류가 안 나서 5xx·up 으로는 안 보인다
+      - alert: DatabaseUnreachable
+        expr: min(att_db_up) == 0
+        for: 15s
+        labels: { severity: critical }
+        annotations:
+          summary: "app 노드에서 PostgreSQL 접속 실패 (출근은 스풀로 받는 중)"
 
   - name: slo
     rules:

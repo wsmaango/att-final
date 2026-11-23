@@ -70,6 +70,7 @@ LAT = Histogram(
 CLOCK = Counter("att_clock_total", "Clock requests", ["result"])  # created|duplicate|spooled|not_found
 CACHE = Counter("att_cache_total", "Cache lookups", ["result"])  # hit|miss|error
 SPOOL_PENDING = Gauge("att_spool_pending", "Clock events waiting in local spool")
+DB_UP = Gauge("att_db_up", "1 if this app node can reach PostgreSQL (checked every 3s)")
 SPOOL_REPLAYED = Counter("att_spool_replayed_total", "Spooled events written to DB", ["result"])
 
 
@@ -278,8 +279,19 @@ def replay_spool_once() -> int:
     return done
 
 
+def _probe_db():
+    """풀·차단기와 별개로 매번 새로 접속해 본다 (DB 장애 탐지용, 5단계 개선)."""
+    try:
+        with psycopg.connect(DB_DSN) as c:
+            c.execute("SELECT 1")
+        DB_UP.set(1)
+    except Exception:  # noqa: BLE001
+        DB_UP.set(0)
+
+
 def _replayer():
     while True:
+        _probe_db()
         try:
             replay_spool_once()
         except Exception:  # noqa: BLE001 - DB 복구 전에는 계속 실패하는 것이 정상
