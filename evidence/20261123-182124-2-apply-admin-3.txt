@@ -1,0 +1,18 @@
+# command : terraform -chdir=terraform apply plan.out
+# time    : 2026-11-23T18:21:24+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+[0m[1mcloudstack_firewall.mgmt: Creating...[0m[0m
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1m1 error occurred:
+[31m│[0m [0m	* CloudStack API error 431 (CSExceptionErrorCode: 9999): Source CIDRs formatting error <2번에서 나온 IP>/32
+[31m│[0m [0m
+[31m│[0m [0m[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m  with cloudstack_firewall.mgmt,
+[31m│[0m [0m  on main.tf line 260, in resource "cloudstack_firewall" "mgmt":
+[31m│[0m [0m 260: resource "cloudstack_firewall" "mgmt" [4m{[0m[0m
+[31m│[0m [0m
+[31m╵[0m[0m
+
+# exit    : 1

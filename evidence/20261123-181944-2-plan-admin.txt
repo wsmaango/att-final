@@ -1,0 +1,27 @@
+# command : terraform -chdir=terraform plan -out plan.out
+# time    : 2026-11-23T18:19:44+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+[0m[1mcloudstack_ssh_keypair.admin: Refreshing state... [id=att-32222323-key][0m
+[0m[1mcloudstack_network.main: Refreshing state... [id=224c211f-9787-4b4a-8aa4-027508cdf3af][0m
+[0m[1mcloudstack_ipaddress.mgmt: Refreshing state... [id=d4e2558b-e773-4528-9c30-849032852c80][0m
+[0m[1mcloudstack_ipaddress.service: Refreshing state... [id=be3ab68b-95e9-4cf4-aa0b-3113d6480fec][0m
+[0m[1mcloudstack_instance.node["mon01"]: Refreshing state... [id=3f908d9e-e8e5-4a86-9d37-1696f1017f83][0m
+[0m[1mcloudstack_instance.node["app01"]: Refreshing state... [id=9506e34f-15b2-46cb-8844-45629b933ce1][0m
+[0m[1mcloudstack_instance.node["lb01"]: Refreshing state... [id=a1134681-17dc-4e84-98d3-bd32470da4ac][0m
+[0m[1mcloudstack_instance.node["lb02"]: Refreshing state... [id=9208a73d-068b-4ee5-afbd-966f833febf7][0m
+[0m[1mcloudstack_instance.node["data01"]: Refreshing state... [id=6ca26861-2e3a-4ff8-86ce-5c46590b63a5][0m
+[0m[1mcloudstack_instance.node["app02"]: Refreshing state... [id=86d41dfb-d038-49b9-8cb7-7058b191b9d0][0m
+[0m[1mcloudstack_loadbalancer_rule.https[0]: Refreshing state... [id=c1cd8744-dac7-4649-8ccd-07c381c04df4][0m
+[0m[1mcloudstack_egress_firewall.main: Refreshing state... [id=224c211f-9787-4b4a-8aa4-027508cdf3af][0m
+[0m[1mcloudstack_loadbalancer_rule.http[0]: Refreshing state... [id=50524047-1e53-4419-ac28-e60022cfad51][0m
+[0m[1mcloudstack_port_forward.mgmt: Refreshing state... [id=d4e2558b-e773-4528-9c30-849032852c80][0m
+[0m[1mcloudstack_firewall.service: Refreshing state... [id=be3ab68b-95e9-4cf4-aa0b-3113d6480fec][0m
+[0m[1mcloudstack_firewall.mgmt: Refreshing state... [id=d4e2558b-e773-4528-9c30-849032852c80][0m
+
+[0m[1m[32mNo changes.[0m[1m Your infrastructure matches the configuration.[0m
+
+[0mTerraform has compared your real infrastructure against your configuration
+and found no differences, so no changes are needed.
+
+# exit    : 0

@@ -1,0 +1,7 @@
+# command : terraform -chdir=terraform apply plan.out
+# time    : 2026-11-23T18:20:12+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+[0m[1mcloudstack_firewall.mgmt: Modifying... [id=d4e2558b-e773-4528-9c30-849032852c80][0m[0m
+
+# exit    : 141

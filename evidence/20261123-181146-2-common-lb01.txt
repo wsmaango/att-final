@@ -1,0 +1,7 @@
+# command : ssh -o StrictHostKeyChecking=accept-new -p 2201 ubuntu@10.0.1.86 'cloud-init status --wait; sudo ufw status numbered; sudo sshd -T | grep -E "passwordauthentication|permitrootlogin"'
+# time    : 2026-11-23T18:11:46+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+ssh: connect to host 10.0.1.86 port 2201: Connection timed out
+
+# exit    : 255

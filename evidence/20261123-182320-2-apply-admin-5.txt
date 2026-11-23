@@ -1,0 +1,38 @@
+# command : terraform -chdir=terraform apply plan.out
+# time    : 2026-11-23T18:23:20+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+[0m[1mcloudstack_firewall.mgmt: Modifying... [id=d4e2558b-e773-4528-9c30-849032852c80][0m[0m
+[0m[1mcloudstack_firewall.mgmt: Still modifying... [id=d4e2558b-e773-4528-9c30-849032852c80, 00m10s elapsed][0m[0m
+[0m[1mcloudstack_firewall.mgmt: Still modifying... [id=d4e2558b-e773-4528-9c30-849032852c80, 00m20s elapsed][0m[0m
+[0m[1mcloudstack_firewall.mgmt: Modifications complete after 20s [id=d4e2558b-e773-4528-9c30-849032852c80][0m
+[0m[1m[32m
+Apply complete! Resources: 0 added, 1 changed, 0 destroyed.[0m
+[0m[1m[32m
+Outputs:
+
+[0mdashboards = {
+  "grafana" = "http://10.0.1.86:3000"
+  "prometheus" = "http://10.0.1.86:9090"
+}
+entry_mode = "vr_lb"
+mgmt_ip = "10.0.1.86"
+private_ips = {
+  "app01" = "app 192.168.0.10"
+  "app02" = "app 192.168.0.11"
+  "data01" = "data 192.168.0.30"
+  "lb01" = "lb 192.168.0.20"
+  "lb02" = "lb 192.168.0.21"
+  "mon01" = "mon 192.168.0.40"
+}
+service_ip = "10.0.1.87"
+ssh_commands = {
+  "app01" = "ssh -p 2203 ubuntu@10.0.1.86"
+  "app02" = "ssh -p 2204 ubuntu@10.0.1.86"
+  "data01" = "ssh -p 2205 ubuntu@10.0.1.86"
+  "lb01" = "ssh -p 2201 ubuntu@10.0.1.86"
+  "lb02" = "ssh -p 2202 ubuntu@10.0.1.86"
+  "mon01" = "ssh -p 2206 ubuntu@10.0.1.86"
+}
+
+# exit    : 0
