@@ -1,0 +1,7 @@
+# command : curl -sk "$CLOUDSTACK_API_URL" | head -c 300; echo
+# time    : 2026-11-23T08:14:13+00:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+<?xml version="1.0" encoding="UTF-8"?><errorresponse cloud-stack-version="x.x.x.x"><errorcode>401</errorcode><errortext>unable to verify user credentials and/or request signature</errortext></errorresponse>
+
+# exit    : 0

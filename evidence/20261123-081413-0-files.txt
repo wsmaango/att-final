@@ -1,0 +1,8 @@
+# command : ls -l ~/.att-env ~/.ssh/id_ed25519.pub
+# time    : 2026-11-23T08:14:13+00:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+-rw------- 1 ubuntu ubuntu 420 Nov 20 08:22 /home/ubuntu/.att-env
+-rw-r--r-- 1 ubuntu ubuntu 101 Nov 20 06:52 /home/ubuntu/.ssh/id_ed25519.pub
+
+# exit    : 0

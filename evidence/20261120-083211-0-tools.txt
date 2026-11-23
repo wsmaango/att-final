@@ -1,0 +1,14 @@
+# command : terraform version; k6 version; checkov --version; tflint --version; gitleaks version
+# time    : 2026-11-20T08:32:11+00:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+Terraform v1.17.2
+on linux_amd64
+
+k6 v2.4.0 (commit/dd9395906d, go1.26.11, linux/amd64)
+3.4.6
+TFLint version 0.66.0
++ ruleset.terraform (0.17.0-bundled)
+8.30.1
+
+# exit    : 0

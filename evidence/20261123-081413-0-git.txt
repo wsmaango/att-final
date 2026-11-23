@@ -1,0 +1,8 @@
+# command : git config user.name; git log --oneline | head -3
+# time    : 2026-11-23T08:14:13+00:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+wsmaango
+e727fa5 init: final project skeleton
+
+# exit    : 0
