@@ -1,0 +1,284 @@
+# command : terraform -chdir=terraform destroy -auto-approve
+# time    : 2026-11-23T17:39:02+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+[0m[1mcloudstack_network.main: Refreshing state... [id=f3e7941a-8240-4b0d-b063-004367839b36][0m
+[0m[1mcloudstack_ssh_keypair.admin: Refreshing state... [id=att-32222323-key][0m
+[0m[1mcloudstack_instance.node["lb02"]: Refreshing state... [id=53113e6d-e3c1-47f5-bfec-ca0e1dd744ad][0m
+[0m[1mcloudstack_ipaddress.service: Refreshing state... [id=be3ab68b-95e9-4cf4-aa0b-3113d6480fec][0m
+[0m[1mcloudstack_egress_firewall.main: Refreshing state... [id=f3e7941a-8240-4b0d-b063-004367839b36][0m
+[0m[1mcloudstack_instance.node["mon01"]: Refreshing state... [id=c6cf9e41-1443-471d-bc66-aa48459498ca][0m
+[0m[1mcloudstack_ipaddress.mgmt: Refreshing state... [id=d4e2558b-e773-4528-9c30-849032852c80][0m
+[0m[1mcloudstack_instance.node["app02"]: Refreshing state... [id=7b9199e2-9215-4ae9-ae2e-9c33b674d3b4][0m
+[0m[1mcloudstack_firewall.service: Refreshing state... [id=be3ab68b-95e9-4cf4-aa0b-3113d6480fec][0m
+[0m[1mcloudstack_firewall.mgmt: Refreshing state... [id=d4e2558b-e773-4528-9c30-849032852c80][0m
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  [31m-[0m destroy[0m
+
+Terraform will perform the following actions:
+
+[1m  # cloudstack_egress_firewall.main[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "cloudstack_egress_firewall" "main" {
+      [31m-[0m[0m id          = "f3e7941a-8240-4b0d-b063-004367839b36" [90m-> null[0m[0m
+      [31m-[0m[0m managed     = false [90m-> null[0m[0m
+      [31m-[0m[0m network_id  = "f3e7941a-8240-4b0d-b063-004367839b36" [90m-> null[0m[0m
+      [31m-[0m[0m parallelism = 2 [90m-> null[0m[0m
+
+      [31m-[0m[0m rule {
+          [31m-[0m[0m cidr_list      = [
+              [31m-[0m[0m "192.168.0.0/24",
+            ] [90m-> null[0m[0m
+          [31m-[0m[0m dest_cidr_list = [] [90m-> null[0m[0m
+          [31m-[0m[0m icmp_code      = 0 [90m-> null[0m[0m
+          [31m-[0m[0m icmp_type      = 0 [90m-> null[0m[0m
+          [31m-[0m[0m ports          = [
+              [31m-[0m[0m "123",
+              [31m-[0m[0m "53",
+            ] [90m-> null[0m[0m
+          [31m-[0m[0m protocol       = "udp" [90m-> null[0m[0m
+          [31m-[0m[0m uuids          = {
+              [31m-[0m[0m "123" = "b2b6dfbe-8700-4343-ace1-6df5c2a7f612"
+              [31m-[0m[0m "53"  = "1081d4b3-1081-4415-9ead-2e1fd38bfdde"
+            } [90m-> null[0m[0m
+        }
+      [31m-[0m[0m rule {
+          [31m-[0m[0m cidr_list      = [
+              [31m-[0m[0m "192.168.0.0/24",
+            ] [90m-> null[0m[0m
+          [31m-[0m[0m dest_cidr_list = [] [90m-> null[0m[0m
+          [31m-[0m[0m icmp_code      = 0 [90m-> null[0m[0m
+          [31m-[0m[0m icmp_type      = 0 [90m-> null[0m[0m
+          [31m-[0m[0m ports          = [
+              [31m-[0m[0m "443",
+              [31m-[0m[0m "80",
+            ] [90m-> null[0m[0m
+          [31m-[0m[0m protocol       = "tcp" [90m-> null[0m[0m
+          [31m-[0m[0m uuids          = {
+              [31m-[0m[0m "443" = "aa435559-0534-4e09-a8fa-ec778047b636"
+              [31m-[0m[0m "80"  = "26974c40-e812-48c2-8ab7-467e11452d65"
+            } [90m-> null[0m[0m
+        }
+    }
+
+[1m  # cloudstack_firewall.mgmt[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "cloudstack_firewall" "mgmt" {
+      [31m-[0m[0m id            = "d4e2558b-e773-4528-9c30-849032852c80" [90m-> null[0m[0m
+      [31m-[0m[0m ip_address_id = "d4e2558b-e773-4528-9c30-849032852c80" [90m-> null[0m[0m
+      [31m-[0m[0m managed       = false [90m-> null[0m[0m
+      [31m-[0m[0m parallelism   = 2 [90m-> null[0m[0m
+
+      [31m-[0m[0m rule {
+          [31m-[0m[0m cidr_list = [
+              [31m-[0m[0m "10.8.0.0/24",
+              [31m-[0m[0m "x.x.x.x/32",
+            ] [90m-> null[0m[0m
+          [31m-[0m[0m icmp_code = 0 [90m-> null[0m[0m
+          [31m-[0m[0m icmp_type = 0 [90m-> null[0m[0m
+          [31m-[0m[0m ports     = [
+              [31m-[0m[0m "2203",
+            ] [90m-> null[0m[0m
+          [31m-[0m[0m protocol  = "tcp" [90m-> null[0m[0m
+          [31m-[0m[0m uuids     = {
+              [31m-[0m[0m "2203" = "f85ca53f-97fd-4afb-a925-baa159627924"
+            } [90m-> null[0m[0m
+        }
+    }
+
+[1m  # cloudstack_instance.node["app02"][0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "cloudstack_instance" "node" {
+      [31m-[0m[0m delete_protection = false [90m-> null[0m[0m
+      [31m-[0m[0m display_name      = "att-32222323-app02" [90m-> null[0m[0m
+      [31m-[0m[0m expunge           = true [90m-> null[0m[0m
+      [31m-[0m[0m id                = "7b9199e2-9215-4ae9-ae2e-9c33b674d3b4" [90m-> null[0m[0m
+      [31m-[0m[0m ip_address        = "192.168.0.11" [90m-> null[0m[0m
+      [31m-[0m[0m keypair           = "att-32222323-key" [90m-> null[0m[0m
+      [31m-[0m[0m name              = "att-32222323-app02" [90m-> null[0m[0m
+      [31m-[0m[0m network_id        = "f3e7941a-8240-4b0d-b063-004367839b36" [90m-> null[0m[0m
+      [31m-[0m[0m root_disk_size    = 20 [90m-> null[0m[0m
+      [31m-[0m[0m service_offering  = "Medium" [90m-> null[0m[0m
+      [31m-[0m[0m start_vm          = true [90m-> null[0m[0m
+      [31m-[0m[0m tags              = {
+          [31m-[0m[0m "managed" = "terraform"
+          [31m-[0m[0m "name"    = "app02"
+          [31m-[0m[0m "owner"   = "32222323"
+          [31m-[0m[0m "project" = "att-32222323"
+          [31m-[0m[0m "role"    = "app"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m template          = "Ubuntu_24.04" [90m-> null[0m[0m
+      [31m-[0m[0m uefi              = false [90m-> null[0m[0m
+      [31m-[0m[0m user_data         = (sensitive value) [90m-> null[0m[0m
+      [31m-[0m[0m zone              = "DKU" [90m-> null[0m[0m
+        [90m# (3 unchanged attributes hidden)[0m[0m
+    }
+
+[1m  # cloudstack_instance.node["lb02"][0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "cloudstack_instance" "node" {
+      [31m-[0m[0m delete_protection = false [90m-> null[0m[0m
+      [31m-[0m[0m display_name      = "att-32222323-lb02" [90m-> null[0m[0m
+      [31m-[0m[0m expunge           = true [90m-> null[0m[0m
+      [31m-[0m[0m id                = "53113e6d-e3c1-47f5-bfec-ca0e1dd744ad" [90m-> null[0m[0m
+      [31m-[0m[0m ip_address        = "192.168.0.21" [90m-> null[0m[0m
+      [31m-[0m[0m keypair           = "att-32222323-key" [90m-> null[0m[0m
+      [31m-[0m[0m name              = "att-32222323-lb02" [90m-> null[0m[0m
+      [31m-[0m[0m network_id        = "f3e7941a-8240-4b0d-b063-004367839b36" [90m-> null[0m[0m
+      [31m-[0m[0m root_disk_size    = 20 [90m-> null[0m[0m
+      [31m-[0m[0m service_offering  = "Medium" [90m-> null[0m[0m
+      [31m-[0m[0m start_vm          = true [90m-> null[0m[0m
+      [31m-[0m[0m tags              = {
+          [31m-[0m[0m "managed" = "terraform"
+          [31m-[0m[0m "name"    = "lb02"
+          [31m-[0m[0m "owner"   = "32222323"
+          [31m-[0m[0m "project" = "att-32222323"
+          [31m-[0m[0m "role"    = "lb"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m template          = "Ubuntu_24.04" [90m-> null[0m[0m
+      [31m-[0m[0m uefi              = false [90m-> null[0m[0m
+      [31m-[0m[0m user_data         = (sensitive value) [90m-> null[0m[0m
+      [31m-[0m[0m zone              = "DKU" [90m-> null[0m[0m
+        [90m# (3 unchanged attributes hidden)[0m[0m
+    }
+
+[1m  # cloudstack_instance.node["mon01"][0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "cloudstack_instance" "node" {
+      [31m-[0m[0m delete_protection = false [90m-> null[0m[0m
+      [31m-[0m[0m display_name      = "att-32222323-mon01" [90m-> null[0m[0m
+      [31m-[0m[0m expunge           = true [90m-> null[0m[0m
+      [31m-[0m[0m id                = "c6cf9e41-1443-471d-bc66-aa48459498ca" [90m-> null[0m[0m
+      [31m-[0m[0m ip_address        = "192.168.0.40" [90m-> null[0m[0m
+      [31m-[0m[0m keypair           = "att-32222323-key" [90m-> null[0m[0m
+      [31m-[0m[0m name              = "att-32222323-mon01" [90m-> null[0m[0m
+      [31m-[0m[0m network_id        = "f3e7941a-8240-4b0d-b063-004367839b36" [90m-> null[0m[0m
+      [31m-[0m[0m root_disk_size    = 20 [90m-> null[0m[0m
+      [31m-[0m[0m service_offering  = "Medium" [90m-> null[0m[0m
+      [31m-[0m[0m start_vm          = true [90m-> null[0m[0m
+      [31m-[0m[0m tags              = {
+          [31m-[0m[0m "managed" = "terraform"
+          [31m-[0m[0m "name"    = "mon01"
+          [31m-[0m[0m "owner"   = "32222323"
+          [31m-[0m[0m "project" = "att-32222323"
+          [31m-[0m[0m "role"    = "mon"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m template          = "Ubuntu_24.04" [90m-> null[0m[0m
+      [31m-[0m[0m uefi              = false [90m-> null[0m[0m
+      [31m-[0m[0m user_data         = (sensitive value) [90m-> null[0m[0m
+      [31m-[0m[0m zone              = "DKU" [90m-> null[0m[0m
+        [90m# (3 unchanged attributes hidden)[0m[0m
+    }
+
+[1m  # cloudstack_ipaddress.mgmt[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "cloudstack_ipaddress" "mgmt" {
+      [31m-[0m[0m id            = "d4e2558b-e773-4528-9c30-849032852c80" [90m-> null[0m[0m
+      [31m-[0m[0m ip_address    = "10.0.1.86" [90m-> null[0m[0m
+      [31m-[0m[0m is_portable   = false [90m-> null[0m[0m
+      [31m-[0m[0m is_source_nat = true [90m-> null[0m[0m
+      [31m-[0m[0m network_id    = "f3e7941a-8240-4b0d-b063-004367839b36" [90m-> null[0m[0m
+      [31m-[0m[0m tags          = {
+          [31m-[0m[0m "managed" = "terraform"
+          [31m-[0m[0m "owner"   = "32222323"
+          [31m-[0m[0m "project" = "att-32222323"
+          [31m-[0m[0m "purpose" = "mgmt"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m zone          = "DKU" [90m-> null[0m[0m
+        [90m# (1 unchanged attribute hidden)[0m[0m
+    }
+
+[1m  # cloudstack_ipaddress.service[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "cloudstack_ipaddress" "service" {
+      [31m-[0m[0m id            = "be3ab68b-95e9-4cf4-aa0b-3113d6480fec" [90m-> null[0m[0m
+      [31m-[0m[0m ip_address    = "10.0.1.87" [90m-> null[0m[0m
+      [31m-[0m[0m is_portable   = false [90m-> null[0m[0m
+      [31m-[0m[0m is_source_nat = false [90m-> null[0m[0m
+      [31m-[0m[0m network_id    = "f3e7941a-8240-4b0d-b063-004367839b36" [90m-> null[0m[0m
+      [31m-[0m[0m tags          = {
+          [31m-[0m[0m "managed" = "terraform"
+          [31m-[0m[0m "owner"   = "32222323"
+          [31m-[0m[0m "project" = "att-32222323"
+          [31m-[0m[0m "purpose" = "service"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m zone          = "DKU" [90m-> null[0m[0m
+        [90m# (1 unchanged attribute hidden)[0m[0m
+    }
+
+[1m  # cloudstack_network.main[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "cloudstack_network" "main" {
+      [31m-[0m[0m acl_id                    = "none" [90m-> null[0m[0m
+      [31m-[0m[0m bypass_vlan_overlap_check = false [90m-> null[0m[0m
+      [31m-[0m[0m cidr                      = "192.168.0.0/24" [90m-> null[0m[0m
+      [31m-[0m[0m display_text              = "att-32222323 isolated network" [90m-> null[0m[0m
+      [31m-[0m[0m gateway                   = "192.168.0.1" [90m-> null[0m[0m
+      [31m-[0m[0m id                        = "f3e7941a-8240-4b0d-b063-004367839b36" [90m-> null[0m[0m
+      [31m-[0m[0m name                      = "att-32222323-net" [90m-> null[0m[0m
+      [31m-[0m[0m network_domain            = "cs25ddku.kloud.internal" [90m-> null[0m[0m
+      [31m-[0m[0m network_offering          = "DefaultIsolatedNetworkOfferingWithSourceNatService" [90m-> null[0m[0m
+      [31m-[0m[0m tags                      = {
+          [31m-[0m[0m "managed" = "terraform"
+          [31m-[0m[0m "owner"   = "32222323"
+          [31m-[0m[0m "project" = "att-32222323"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m zone                      = "DKU" [90m-> null[0m[0m
+        [90m# (4 unchanged attributes hidden)[0m[0m
+    }
+
+[1m  # cloudstack_ssh_keypair.admin[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "cloudstack_ssh_keypair" "admin" {
+      [31m-[0m[0m fingerprint = "1c:ee:96:87:58:0b:9b:d3:1d:4e:2d:9f:9e:25:e2:94" [90m-> null[0m[0m
+      [31m-[0m[0m id          = "att-32222323-key" [90m-> null[0m[0m
+      [31m-[0m[0m name        = "att-32222323-key" [90m-> null[0m[0m
+      [31m-[0m[0m public_key  = <<-EOT
+            ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOYWwYCFUlzWEjdqlcbceRLNDvThc+qmQaaG9HlyTgYy ubuntu@wons-3222323
+        EOT [90m-> null[0m[0m
+    }
+
+[1mPlan:[0m [0m0 to add, 0 to change, 9 to destroy.
+
+Changes to Outputs:
+  [31m-[0m[0m dashboards   = {
+      [31m-[0m[0m grafana    = "http://10.0.1.86:3000"
+      [31m-[0m[0m prometheus = "http://10.0.1.86:9090"
+    } [90m-> null[0m[0m
+  [31m-[0m[0m entry_mode   = "vr_lb" [90m-> null[0m[0m
+  [31m-[0m[0m mgmt_ip      = "10.0.1.86" [90m-> null[0m[0m
+  [31m-[0m[0m private_ips  = {
+      [31m-[0m[0m app01  = "app 192.168.0.10"
+      [31m-[0m[0m app02  = "app 192.168.0.11"
+      [31m-[0m[0m data01 = "data 192.168.0.30"
+      [31m-[0m[0m lb01   = "lb 192.168.0.20"
+      [31m-[0m[0m lb02   = "lb 192.168.0.21"
+      [31m-[0m[0m mon01  = "mon 192.168.0.40"
+    } [90m-> null[0m[0m
+  [31m-[0m[0m service_ip   = "10.0.1.87" [90m-> null[0m[0m
+  [31m-[0m[0m ssh_commands = {
+      [31m-[0m[0m app01  = "ssh -p 2203 ubuntu@10.0.1.86"
+      [31m-[0m[0m app02  = "ssh -p 2204 ubuntu@10.0.1.86"
+      [31m-[0m[0m data01 = "ssh -p 2205 ubuntu@10.0.1.86"
+      [31m-[0m[0m lb01   = "ssh -p 2201 ubuntu@10.0.1.86"
+      [31m-[0m[0m lb02   = "ssh -p 2202 ubuntu@10.0.1.86"
+      [31m-[0m[0m mon01  = "ssh -p 2206 ubuntu@10.0.1.86"
+    } [90m-> null[0m[0m
+[0m[1mcloudstack_firewall.mgmt: Destroying... [id=d4e2558b-e773-4528-9c30-849032852c80][0m[0m
+[0m[1mcloudstack_instance.node["app02"]: Destroying... [id=7b9199e2-9215-4ae9-ae2e-9c33b674d3b4][0m[0m
+[0m[1mcloudstack_ipaddress.service: Destroying... [id=be3ab68b-95e9-4cf4-aa0b-3113d6480fec][0m[0m
+[0m[1mcloudstack_egress_firewall.main: Destroying... [id=f3e7941a-8240-4b0d-b063-004367839b36][0m[0m
+[0m[1mcloudstack_instance.node["mon01"]: Destroying... [id=c6cf9e41-1443-471d-bc66-aa48459498ca][0m[0m
+[0m[1mcloudstack_instance.node["lb02"]: Destroying... [id=53113e6d-e3c1-47f5-bfec-ca0e1dd744ad][0m[0m
+[0m[1mcloudstack_ipaddress.service: Destruction complete after 1s[0m
+[0m[1mcloudstack_firewall.mgmt: Destruction complete after 3s[0m
+[0m[1mcloudstack_ipaddress.mgmt: Destroying... [id=d4e2558b-e773-4528-9c30-849032852c80][0m[0m
+[0m[1mcloudstack_ipaddress.mgmt: Destruction complete after 1s[0m
+[0m[1mcloudstack_egress_firewall.main: Destruction complete after 8s[0m
+[0m[1mcloudstack_instance.node["app02"]: Still destroying... [id=7b9199e2-9215-4ae9-ae2e-9c33b674d3b4, 00m10s elapsed][0m[0m
+[0m[1mcloudstack_instance.node["mon01"]: Still destroying... [id=c6cf9e41-1443-471d-bc66-aa48459498ca, 00m10s elapsed][0m[0m
+[0m[1mcloudstack_instance.node["lb02"]: Still destroying... [id=53113e6d-e3c1-47f5-bfec-ca0e1dd744ad, 00m10s elapsed][0m[0m
+[0m[1mcloudstack_instance.node["mon01"]: Destruction complete after 15s[0m
+[0m[1mcloudstack_instance.node["lb02"]: Destruction complete after 15s[0m
+[0m[1mcloudstack_instance.node["app02"]: Destruction complete after 15s[0m
+[0m[1mcloudstack_ssh_keypair.admin: Destroying... [id=att-32222323-key][0m[0m
+[0m[1mcloudstack_network.main: Destroying... [id=f3e7941a-8240-4b0d-b063-004367839b36][0m[0m
+[0m[1mcloudstack_ssh_keypair.admin: Destruction complete after 0s[0m
+[0m[1mcloudstack_network.main: Destruction complete after 6s[0m
+[0m[1m[32m
+Destroy complete! Resources: 9 destroyed.[0m
+
+# exit    : 0

@@ -67,6 +67,8 @@ resource "cloudstack_network" "main" {
 resource "cloudstack_egress_firewall" "main" {
   network_id = cloudstack_network.main.id
 
+  depends_on = [cloudstack_instance.node]
+
   rule {
     cidr_list = [var.network_cidr]
     protocol  = "tcp"
@@ -146,13 +148,11 @@ resource "cloudstack_disk" "data" {
 resource "cloudstack_ipaddress" "service" {
   network_id = cloudstack_network.main.id
   zone       = var.zone
-  tags       = merge(local.common_tags, { purpose = "service" })
 }
 
 resource "cloudstack_ipaddress" "mgmt" {
   network_id = cloudstack_network.main.id
   zone       = var.zone
-  tags       = merge(local.common_tags, { purpose = "mgmt" })
 }
 
 ############################################
@@ -208,6 +208,9 @@ resource "cloudstack_port_forward" "service" {
 
 resource "cloudstack_firewall" "service" {
   ip_address_id = cloudstack_ipaddress.service.id
+  parallelism   = 1
+
+  depends_on = [cloudstack_loadbalancer_rule.http, cloudstack_loadbalancer_rule.https, cloudstack_port_forward.service]
 
   rule {
     cidr_list = var.service_cidrs
@@ -256,6 +259,9 @@ resource "cloudstack_port_forward" "mgmt" {
 
 resource "cloudstack_firewall" "mgmt" {
   ip_address_id = cloudstack_ipaddress.mgmt.id
+  parallelism   = 1
+
+  depends_on = [cloudstack_port_forward.mgmt]
 
   rule {
     cidr_list = var.admin_cidrs

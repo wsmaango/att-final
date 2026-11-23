@@ -1,0 +1,22 @@
+# command : time terraform -chdir=terraform apply plan.out
+# time    : 2026-11-23T17:39:31+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mAttribute redefined[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m  on terraform.tfvars line 32:
+[31m│[0m [0m  32: [4mnodes[0m = {[0m
+[31m│[0m [0m
+[31m│[0m [0mThe argument "nodes" was already set at terraform.tfvars:22,1-6. Each
+[31m│[0m [0margument may be set only once.
+[31m╵[0m[0m
+
+For more help on using this command, run:
+  terraform apply -help
+
+real	0m0.055s
+user	0m0.028s
+sys	0m0.013s
+
+# exit    : 1
