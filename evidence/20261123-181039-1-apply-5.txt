@@ -1,0 +1,16 @@
+# command : time terraform -chdir=terraform apply plan.out
+# time    : 2026-11-23T18:10:39+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mSaved plan is stale[0m
+[31m│[0m [0m
+[31m│[0m [0m[0mThe given plan file can no longer be applied because the state was changed
+[31m│[0m [0mby another operation after the plan was created.
+[31m╵[0m[0m
+
+real	0m0.076s
+user	0m0.072s
+sys	0m0.013s
+
+# exit    : 1

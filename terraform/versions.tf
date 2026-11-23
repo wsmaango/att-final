@@ -3,8 +3,10 @@ terraform {
 
   required_providers {
     cloudstack = {
-      source  = "cloudstack/cloudstack"
-      version = "~> 0.5"
+      source = "cloudstack/cloudstack"
+      # 0.5.0 고정: 0.6.0+ 는 LB 규칙 생성 후 오토스케일 그룹 조회 실패 시 nil 포인터 패닉
+      # (Solid Cloud 학생 계정에서 재현, resource_cloudstack_loadbalancer_rule.go:274)
+      version = "0.5.0"
     }
   }
 }
