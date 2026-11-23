@@ -1,0 +1,12 @@
+# command : for p in 2203 2204; do ssh -p $p ubuntu@$MGMT "sudo sed -i \"/^SPOOL_ENABLED=/d\" /etc/att/app.env && echo SPOOL_ENABLED=false | sudo tee -a /etc/att/app.env >/dev/null && sudo systemctl restart att-app && sleep 5 && hostname && systemctl is-active att-app && sudo grep ^SPOOL_ENABLED /etc/att/app.env"; done
+# time    : 2026-11-23T22:23:03+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+app01
+active
+SPOOL_ENABLED=false
+app02
+active
+SPOOL_ENABLED=false
+
+# exit    : 0

@@ -18,6 +18,8 @@ t "키 없으면 401"             "$(code -XPOST -H "$J" -d '{"emp_no":"E0001"}'
 t "출근 201 또는 200(중복)"   "$(code -XPOST -H "$K1" -H "$J" -d "{\"emp_no\":\"$EMP\",\"kind\":\"in\"}" ${B}/api/clock | sed 's/^201$/200/')" 200
 t "같은 출근 재요청 200(멱등)" "$(code -XPOST -H "$K1" -H "$J" -d "{\"emp_no\":\"$EMP\",\"kind\":\"in\"}" ${B}/api/clock)" 200
 t "현황 200"                  "$(code -H "$K1" ${B}/api/attendance/today)" 200
+# 고객사 2 키가 무효(예: 재생성 후 데모 키로 돌아갔는데 ~/.att-env 에는 교체한 키)면 401 본문에 "out" 이 없어 분리 검사가 거짓으로 통과한다 → 전제부터 확인
+t "고객사 2 키 유효(분리 검사 전제)" "$(code -H "$K2" ${B}/api/attendance/today)" 200
 code -XPOST -H "$K1" -H "$J" -d "{\"emp_no\":\"$EMP\",\"kind\":\"out\"}" ${B}/api/clock >/dev/null
 t "고객사 1 에서 자기 퇴근 기록 보임(대조군)" "$(curl -sk -H "$K1" ${B}/api/employees/${EMP}/records | grep -c '"kind":"out"' || true)" 1
 t "다른 고객사에서는 기록 안 보임" "$(curl -sk -H "$K2" ${B}/api/employees/${EMP}/records | grep -c '"kind":"out"' || true)" 0

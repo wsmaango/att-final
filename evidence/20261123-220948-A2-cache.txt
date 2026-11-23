@@ -1,0 +1,16 @@
+# command : for i in 1 2 3; do curl -sk -D - -o /dev/null -H "X-Api-Key: demo-key-tenant-1" https://$SVC/api/attendance/today | grep -iE "^x-(cache|served-by)"; sleep 1; done
+echo "--- 다른 고객사 (캐시는 고객사별로 분리)"; curl -sk -D - -o /dev/null -H "X-Api-Key: demo-key-tenant-3" https://$SVC/api/attendance/today | grep -iE "^x-(cache|served-by)"
+# time    : 2026-11-23T22:09:48+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+X-Cache: MISS
+X-Served-By: app01
+X-Cache: HIT
+X-Served-By: app02
+X-Cache: HIT
+X-Served-By: app02
+--- 다른 고객사 (캐시는 고객사별로 분리)
+X-Cache: MISS
+X-Served-By: app01
+
+# exit    : 0

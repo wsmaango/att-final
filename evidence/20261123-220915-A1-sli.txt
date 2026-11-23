@@ -1,0 +1,29 @@
+# command : export PROM=http://$MGMT:9090; E3=$(date -d "2026-11-23 20:45:00" +%s)
+echo "## 부하 3회차 (20:41~20:45, 연결 풀 적용) - 서버 쪽 측정"
+scripts/promq.sh "1 - ((sum(increase(att_http_requests_total{status=~\"5..\"}[4m] @ $E3)) or vector(0)) / sum(increase(att_http_requests_total[4m] @ $E3)))"
+scripts/promq.sh "histogram_quantile(0.95, sum by (le) (increase(att_http_request_duration_seconds_bucket{endpoint=\"/api/clock\"}[4m] @ $E3)))"
+scripts/promq.sh "sum(increase(att_cache_total{result=\"hit\"}[4m] @ $E3)) / sum(increase(att_cache_total[4m] @ $E3))"
+R=$(( ( $(date +%s) - $(date -d "2026-11-23 19:55:00" +%s) ) / 60 ))m
+echo "## 재생성 이후 전체 ($R: 부하·장애 주입·S4 공격 포함)"
+scripts/promq.sh "1 - ((sum(increase(att_http_requests_total{status=~\"5..\"}[$R])) or vector(0)) / sum(increase(att_http_requests_total[$R])))"
+scripts/promq.sh "sum by (status) (increase(att_http_requests_total[$R]))"
+# time    : 2026-11-23T22:09:15+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+## 부하 3회차 (20:41~20:45, 연결 풀 적용) - 서버 쪽 측정
+query: 1 - ((sum(increase(att_http_requests_total{status=~"5.."}[4m] @ 1795434300)) or vector(0)) / sum(increase(att_http_requests_total[4m] @ 1795434300)))
+{}  1
+query: histogram_quantile(0.95, sum by (le) (increase(att_http_request_duration_seconds_bucket{endpoint="/api/clock"}[4m] @ 1795434300)))
+{}  0.017673225532320477
+query: sum(increase(att_cache_total{result="hit"}[4m] @ 1795434300)) / sum(increase(att_cache_total[4m] @ 1795434300))
+{}  0.11778409119071574
+## 재생성 이후 전체 (134m: 부하·장애 주입·S4 공격 포함)
+query: 1 - ((sum(increase(att_http_requests_total{status=~"5.."}[134m])) or vector(0)) / sum(increase(att_http_requests_total[134m])))
+{}  1
+query: sum by (status) (increase(att_http_requests_total[134m]))
+{"status":"200"}  94992.35233939457
+{"status":"401"}  1867.7700357995718
+{"status":"201"}  85093.97729336642
+{"status":"202"}  318.4215246636771
+
+# exit    : 0

@@ -1,0 +1,46 @@
+# command : cd terraform && terraform output && echo "--- state" && terraform state list
+# time    : 2026-11-23T22:10:03+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+dashboards = {
+  "grafana" = "http://10.0.1.87:3000"
+  "prometheus" = "http://10.0.1.87:9090"
+}
+entry_mode = "vr_lb"
+mgmt_ip = "10.0.1.87"
+private_ips = {
+  "app01" = "app 192.168.0.10"
+  "app02" = "app 192.168.0.11"
+  "data01" = "data 192.168.0.30"
+  "lb01" = "lb 192.168.0.20"
+  "lb02" = "lb 192.168.0.21"
+  "mon01" = "mon 192.168.0.40"
+}
+service_ip = "10.0.1.86"
+ssh_commands = {
+  "app01" = "ssh -p 2203 ubuntu@10.0.1.87"
+  "app02" = "ssh -p 2204 ubuntu@10.0.1.87"
+  "data01" = "ssh -p 2205 ubuntu@10.0.1.87"
+  "lb01" = "ssh -p 2201 ubuntu@10.0.1.87"
+  "lb02" = "ssh -p 2202 ubuntu@10.0.1.87"
+  "mon01" = "ssh -p 2206 ubuntu@10.0.1.87"
+}
+--- state
+cloudstack_egress_firewall.main
+cloudstack_firewall.mgmt
+cloudstack_firewall.service
+cloudstack_instance.node["app01"]
+cloudstack_instance.node["app02"]
+cloudstack_instance.node["data01"]
+cloudstack_instance.node["lb01"]
+cloudstack_instance.node["lb02"]
+cloudstack_instance.node["mon01"]
+cloudstack_ipaddress.mgmt
+cloudstack_ipaddress.service
+cloudstack_loadbalancer_rule.http[0]
+cloudstack_loadbalancer_rule.https[0]
+cloudstack_network.main
+cloudstack_port_forward.mgmt
+cloudstack_ssh_keypair.admin
+
+# exit    : 0
