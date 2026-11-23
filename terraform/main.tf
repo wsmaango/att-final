@@ -45,8 +45,9 @@ locals {
       "/opt/bootstrap/data.sh" = replace(file("${local.repo}/config/bootstrap/data.sh"), "\r\n", "\n")
     }
     mon = {
-      "/opt/bootstrap/mon.sh"     = replace(file("${local.repo}/config/bootstrap/mon.sh"), "\r\n", "\n")
-      "/opt/bootstrap/alerts.yml" = replace(file("${local.repo}/config/prometheus/alerts.yml"), "\r\n", "\n")
+      "/opt/bootstrap/mon.sh"                    = replace(file("${local.repo}/config/bootstrap/mon.sh"), "\r\n", "\n")
+      "/opt/bootstrap/alerts.yml"                = replace(file("${local.repo}/config/prometheus/alerts.yml"), "\r\n", "\n")
+      "/opt/bootstrap/grafana/att-overview.json" = replace(file("${local.repo}/config/grafana/att-overview.json"), "\r\n", "\n")
     }
   }
 }

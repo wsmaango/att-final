@@ -38,11 +38,26 @@ cat > /etc/grafana/provisioning/datasources/prometheus.yml <<'CONF'
 apiVersion: 1
 datasources:
   - name: Prometheus
+    uid: prometheus
     type: prometheus
     url: http://localhost:9090
     isDefault: true
 CONF
+# 대시보드도 코드로 (재생성해도 자동 복원)
+install -d /var/lib/grafana/dashboards
+cp /opt/bootstrap/grafana/att-overview.json /var/lib/grafana/dashboards/
+chown -R grafana:grafana /var/lib/grafana/dashboards
+cat > /etc/grafana/provisioning/dashboards/att.yml <<'CONF'
+apiVersion: 1
+providers:
+  - name: att
+    folder: ATT
+    type: file
+    options:
+      path: /var/lib/grafana/dashboards
+CONF
 systemctl enable --now grafana-server
+systemctl restart grafana-server
 
 # --- 백업: 15분마다 pg_dump (RPO 15분), 7일 보관 ---
 id backup-att >/dev/null 2>&1 || useradd --system --create-home --shell /usr/sbin/nologin backup-att
