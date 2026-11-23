@@ -59,3 +59,7 @@ jobs:
       - uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # 로컬·작업 VM 과 같은 버전·설정으로 고정한다. 액션 기본 버전이 더 오래되면
+          # .gitleaks.toml 의 [[allowlists]] 형식(8.25+)을 읽지 못해 예외로 둔 더미값을 다시 잡는다.
+          GITLEAKS_VERSION: "8.30.1"
+          GITLEAKS_CONFIG: .gitleaks.toml
