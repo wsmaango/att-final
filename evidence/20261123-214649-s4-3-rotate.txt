@@ -1,0 +1,22 @@
+# command : set -e
+OUT=$(ssh -p 2205 ubuntu@$MGMT "sudo bash -s -- 2" < scripts/rotate-tenant-key.sh)
+T0=$(date +%s%3N); echo "$OUT" | head -1
+NEW=$(echo "$OUT" | sed -n "s/^new key.*: //p"); [ ${#NEW} -eq 52 ] || { echo "키 추출 실패"; exit 1; }
+sed -i "/^export ATT_KEY_T2=/d" ~/.att-env; echo "export ATT_KEY_T2=$NEW" >> ~/.att-env
+echo "새 키: ~/.att-env 에 저장 (화면·증거에는 남기지 않음), 길이 ${#NEW}"
+ok=0; while :; do c=$(curl -sk -o /dev/null -w "%{http_code}" -H "X-Api-Key: demo-key-tenant-2" https://$SVC/api/attendance/today); now=$(date +%s%3N)
+  if [ "$c" = 401 ]; then ok=$((ok+1)); else ok=0; fi; echo "$((now-T0)) $c"
+  [ $ok -ge 10 ] && break; [ $((now-T0)) -gt 90000 ] && break; sleep 0.5; done | awk '$2!=p {print "+" $1 "ms  옛 키 → " $2; p=$2} END {print "마지막 +" $1 "ms  옛 키 → " $2}'
+echo "새 키 → $(curl -sk -o /dev/null -w "%{http_code}" -H "X-Api-Key: $NEW" https://$SVC/api/attendance/today)"
+echo "고객사 1 → $(curl -sk -o /dev/null -w "%{http_code}" -H "X-Api-Key: demo-key-tenant-1" https://$SVC/api/attendance/today)"
+# time    : 2026-11-23T21:46:49+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+tenant 2 rotated at 2026-11-23T12:46:50+00:00
+새 키: ~/.att-env 에 저장 (화면·증거에는 남기지 않음), 길이 52
++42ms  옛 키 → 401
+마지막 +4883ms  옛 키 → 401
+새 키 → 200
+고객사 1 → 200
+
+# exit    : 0

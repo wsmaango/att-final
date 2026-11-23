@@ -1,0 +1,11 @@
+# command : ssh -p 2205 ubuntu@$MGMT "sudo -u postgres psql -d att -c \"SELECT source, count(*) AS records, count(DISTINCT emp_no) AS employees, min(ts) AT TIME ZONE 'Asia/Seoul' AS first_kst, max(ts) AT TIME ZONE 'Asia/Seoul' AS last_kst FROM attendance WHERE tenant_id = 2 AND ts BETWEEN '2026-11-23 21:40:30+09' AND '2026-11-23 21:45:00+09' GROUP BY source\""
+# time    : 2026-11-23T21:54:52+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+ source | records | employees |         first_kst          |          last_kst          
+--------+---------+-----------+----------------------------+----------------------------
+ api    |    8702 |      8702 | 2026-11-23 21:40:40.214388 | 2026-11-23 21:44:39.012981
+(1 row)
+
+
+# exit    : 0

@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 # 배포 직후·재생성 후 동작 확인. 사용: scripts/smoke-test.sh <service_ip>
 set -euo pipefail
-IP=${1:?service_ip}; B="https://${IP}"; K1='X-Api-Key: demo-key-tenant-1'; K2='X-Api-Key: demo-key-tenant-2'
+IP=${1:?service_ip}; B="https://${IP}"
+# 키는 ~/.att-env 의 ATT_KEY_T1·T2 에서 읽는다 (S4: 키를 저장소에 두지 않음). 없으면 데모 키.
+[ -f ~/.att-env ] && source ~/.att-env
+K1="X-Api-Key: ${ATT_KEY_T1:-demo-key-tenant-1}"; K2="X-Api-Key: ${ATT_KEY_T2:-demo-key-tenant-2}"
 J='Content-Type: application/json'; ok=0; fail=0
 code() { curl -sk -o /dev/null -w '%{http_code}' "$@"; }
 t() { if [ "$2" = "$3" ]; then echo "PASS  $1"; ok=$((ok+1)); else echo "FAIL  $1 (expected $3, got $2)"; fail=$((fail+1)); fi; }

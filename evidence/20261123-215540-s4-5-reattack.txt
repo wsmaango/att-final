@@ -1,0 +1,22 @@
+# command : source ~/.att-env; export PROM=http://$MGMT:9090
+echo "### $(date +%T) 공격 시작 (현재 키 폭주 + 폐기된 키 재시도)"
+k6 run -q -e BASE=https://$SVC -e KEYS=$ATT_KEY_T2 tests/load/k6-clock-rush.js > /tmp/s4-k6b.txt 2>&1 &
+end=$((SECONDS+200)); n=0; while [ $SECONDS -lt $end ]; do curl -sk -o /dev/null -H "X-Api-Key: demo-key-tenant-2" https://$SVC/api/attendance/today; n=$((n+1)); sleep 0.08; done
+echo "폐기된 키 재시도: ${n}건"; wait
+echo "### $(date +%T) 공격 종료"; grep -E "http_reqs|checks_failed" /tmp/s4-k6b.txt
+scripts/promq.sh "max_over_time(ALERTS{alertname=~\"TenantRequestSurge|AuthFailureSurge\"}[6m])"
+# time    : 2026-11-23T21:55:40+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+### 21:55:40 공격 시작 (현재 키 폭주 + 폐기된 키 재시도)
+폐기된 키 재시도: 1846건
+### 21:59:40 공격 종료
+    checks_failed......: 14.45% 5637 out of 38998
+    http_reqs......................: 38998  162.490048/s
+query: max_over_time(ALERTS{alertname=~"TenantRequestSurge|AuthFailureSurge"}[6m])
+{"alertname":"AuthFailureSurge","alertstate":"firing","severity":"warning"}  1
+{"alertname":"AuthFailureSurge","alertstate":"pending","severity":"warning"}  1
+{"alertname":"TenantRequestSurge","alertstate":"firing","severity":"warning","tenant":"2"}  1
+{"alertname":"TenantRequestSurge","alertstate":"pending","severity":"warning","tenant":"2"}  1
+
+# exit    : 0

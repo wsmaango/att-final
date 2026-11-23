@@ -1,0 +1,8 @@
+# command : export PROM=http://$MGMT:9090; for a in TenantRequestSurge AuthFailureSurge; do t=$(curl -sG "$PROM/api/v1/query_range" --data-urlencode "query=ALERTS{alertname=\"$a\",alertstate=\"firing\"}" --data-urlencode "start=$(date -d "-8 min" +%s)" --data-urlencode "end=$(date +%s)" --data-urlencode "step=5" | jq -r ".data.result[0].values[0][0] // empty"); echo "$a 첫 firing: ${t:+$(date -d @${t%.*} +%T)}"; done
+# time    : 2026-11-23T21:59:59+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+TenantRequestSurge 첫 firing: 21:58:39
+AuthFailureSurge 첫 firing: 21:57:24
+
+# exit    : 0

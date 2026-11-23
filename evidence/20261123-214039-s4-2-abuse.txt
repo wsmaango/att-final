@@ -1,0 +1,19 @@
+# command : k6 run -q -e BASE=https://$SVC -e KEYS=demo-key-tenant-2 tests/load/k6-clock-rush.js > /tmp/s4-k6.txt 2>&1 & sleep 5
+echo "### $(date +%T) 고객사 1 정상 트래픽 측정 시작 (유출 키 공격과 동시)"
+API_KEY=demo-key-tenant-1 MODE=clock tests/failover/measure.sh https://$SVC 230 2>&1 | tail -n 1
+wait
+echo "=== k6 (유출 키 = 고객사 2)"; grep -E "http_reqs|att_errors|checks_succeeded|checks_failed" /tmp/s4-k6.txt
+# time    : 2026-11-23T21:40:39+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+### 21:40:44 고객사 1 정상 트래픽 측정 시작 (유출 키 공격과 동시)
+# mode=clock requests=941 failed=0 spooled=0 success_rate=100.000% downtime_ms=0
+=== k6 (유출 키 = 고객사 2)
+    att_errors
+    checks_succeeded...: 85.50% 33346 out of 39001
+    checks_failed......: 14.49% 5655 out of 39001
+    att_errors.....................: 14.49% 5655 out of 39001
+    http_reqs......................: 39001  162.502677/s
+time="2026-11-23T21:44:40+09:00" level=error msg="thresholds on metrics 'att_errors, http_req_duration{name:clock}, http_req_duration{name:today}' have been crossed"
+
+# exit    : 0

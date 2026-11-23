@@ -1,0 +1,10 @@
+# command : set -e; OUT=$(ssh -p 2205 ubuntu@$MGMT "sudo bash -s -- 2" < scripts/rotate-tenant-key.sh); echo "$OUT" | head -1
+NEW=$(echo "$OUT" | sed -n "s/^new key.*: //p"); [ ${#NEW} -eq 52 ] || { echo "키 추출 실패"; exit 1; }
+sed -i "/^export ATT_KEY_T2=/d" ~/.att-env; echo "export ATT_KEY_T2=$NEW" >> ~/.att-env; echo "저장 완료 (길이 ${#NEW})"
+# time    : 2026-11-23T22:00:33+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+tenant 2 rotated at 2026-11-23T13:00:34+00:00
+저장 완료 (길이 52)
+
+# exit    : 0

@@ -15,6 +15,20 @@ groups:
         annotations:
           summary: "정상 app 노드가 2대 미만 (이중화 깨짐)"
       # 5단계에서 추가: nginx 만 죽으면 exporter 는 살아 있어 up 으로는 안 보인다
+      # S4 에서 추가: 유출 키 폭주. 평시 9시 피크는 고객사당 약 83 req/s (k6 모델 250 req/s ÷ 3곳)
+      - alert: TenantRequestSurge
+        expr: sum by (tenant) (rate(att_tenant_requests_total[1m])) > 120
+        for: 1m
+        labels: { severity: warning }
+        annotations:
+          summary: "고객사 {{ $labels.tenant }} 호출 {{ $value | humanize }} req/s (평시 피크의 1.5배 초과, 키 유출 의심)"
+      # S4 에서 추가: 교체된(폐기된) 키나 추측한 키로 계속 두드리는 경우
+      - alert: AuthFailureSurge
+        expr: sum(rate(att_http_requests_total{status="401"}[1m])) > 5
+        for: 1m
+        labels: { severity: warning }
+        annotations:
+          summary: "인증 실패 {{ $value | humanize }} req/s (폐기된 키 재사용·키 추측 의심)"
       - alert: LbNginxDown
         expr: nginx_up == 0
         for: 15s

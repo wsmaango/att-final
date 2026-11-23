@@ -10,3 +10,12 @@ description = "terraform/tests 의 더미 값 (TestOnly 접두사로만 허용, 
 paths = ['''^terraform/tests/policy\.tftest\.hcl$''']
 regexes = ['''TestOnly[A-Za-z]+123''']
 condition = "AND"
+
+# S4 에서 추가: 실제 고객사 키 형식(att_ + 48자리 hex)을 전용 규칙으로 잡는다.
+# 기본 generic-api-key 규칙은 "KEY=값" 꼴일 때만, 그리고 무작위성이 높을 때만 잡는다.
+# (데모 키 demo-key-tenant-2 는 무작위성이 낮아 기본 규칙으로는 탐지되지 않았다 → S4 근본 원인 중 하나)
+[[rules]]
+id = "att-tenant-api-key"
+description = "ATT 고객사 API 키 (att_ + 48자리 hex, rotate-tenant-key.sh 형식)"
+regex = '''\batt_[0-9a-f]{48}\b'''
+keywords = ["att_"]

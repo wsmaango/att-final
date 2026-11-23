@@ -28,7 +28,7 @@ from zoneinfo import ZoneInfo
 import psycopg
 from psycopg_pool import ConnectionPool
 import redis
-from flask import Flask, Response, g, jsonify, request
+from flask import Flask, Response, g, has_request_context, jsonify, request
 from prometheus_client import CONTENT_TYPE_LATEST, Counter, Gauge, Histogram, generate_latest
 
 KST = ZoneInfo("Asia/Seoul")
@@ -61,6 +61,8 @@ rds = redis.Redis(
 )
 
 REQS = Counter("att_http_requests_total", "HTTP requests", ["method", "endpoint", "status"])
+# S4: 고객사별 호출량 (유출 키 폭주 탐지용). 고객사 수만큼만 라벨이 생긴다.
+TENANT_REQS = Counter("att_tenant_requests_total", "Authenticated requests per tenant", ["tenant"])
 LAT = Histogram(
     "att_http_request_duration_seconds",
     "HTTP latency",
@@ -202,6 +204,13 @@ class AuthError(Exception):
 
 
 def resolve_tenant(api_key: str | None) -> int:
+    tid = _resolve_tenant(api_key)
+    if has_request_context():
+        g.tenant_id = tid  # 고객사별 호출량 지표 (_record 에서 센다)
+    return tid
+
+
+def _resolve_tenant(api_key: str | None) -> int:
     """API 키 → tenant_id. 30초 캐시. DB 장애 중에는 이전에 확인된 키를 그대로 인정한다(출근 접수 유지)."""
     if not api_key:
         raise AuthError
@@ -324,6 +333,9 @@ def _record(resp):
     if ep != "/metrics":
         LAT.labels(ep).observe(time.perf_counter() - g.t0)
         REQS.labels(request.method, ep, resp.status_code).inc()
+        tid = g.get("tenant_id")
+        if tid is not None:
+            TENANT_REQS.labels(str(tid)).inc()
     resp.headers["X-Served-By"] = NODE
     return resp
 

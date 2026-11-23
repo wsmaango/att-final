@@ -1,0 +1,20 @@
+# command : set +e; R=~/att-final/.gitleaks.toml; rm -rf /tmp/s4p && mkdir /tmp/s4p && cd /tmp/s4p && git init -q
+c() { git add -A && git -c user.name=s4 -c user.email=s4@example.invalid commit -qm "$1"; }
+echo "ATT_API_KEY=\"demo-key-tenant-2\"" > leak_demo.env; c "demo key"
+echo "== A. 데모 키, 기본 규칙";   gitleaks detect --source . --log-opts=--all --redact --no-banner 2>&1 | tail -1
+echo "note: att_$(openssl rand -hex 24)" > memo.txt; c "real-format key in memo"
+echo "== B. 실제 형식 키(메모), 기본 규칙"; gitleaks detect --source . --log-opts=--all --redact --no-banner 2>&1 | tail -1
+echo "== C. 같은 이력, 전용 규칙 추가"; gitleaks detect --source . --log-opts=--all --redact --no-banner -c $R -v 2>&1 | grep -E "RuleID|File:|leaks"
+# time    : 2026-11-23T21:39:46+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+== A. 데모 키, 기본 규칙
+[90m9:39PM[0m [32mINF[0m [1mno leaks found[0m
+== B. 실제 형식 키(메모), 기본 규칙
+[90m9:39PM[0m [32mINF[0m [1mno leaks found[0m
+== C. 같은 이력, 전용 규칙 추가
+RuleID:      att-tenant-api-key
+File:        memo.txt
+[90m9:39PM[0m [33mWRN[0m [1mleaks found: 1[0m
+
+# exit    : 1

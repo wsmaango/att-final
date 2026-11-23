@@ -1,0 +1,13 @@
+# command : for p in 2201 2202; do echo "== lb$((p-2200)) (최근 5분, UTC)"; ssh -p $p ubuntu@$MGMT "sudo awk -v s=\$(date -u -d \"-5 min\" +%Y-%m-%dT%H:%M) 'substr(\$2,2,16) >= s {c[\$6]++} END{for(k in c) print k, c[k]}' /var/log/nginx/att_access.log | sort"; done
+# time    : 2026-11-23T21:45:51+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+== lb1 (최근 5분, UTC)
+200 12588
+201 4754
+429 5655
+== lb2 (최근 5분, UTC)
+200 12520
+201 4425
+
+# exit    : 0
