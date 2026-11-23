@@ -1,0 +1,7 @@
+# command : ssh -p 2205 ubuntu@$MGMT "sudo -u postgres psql -d att -c \"DELETE FROM attendance WHERE work_date = current_date\""
+# time    : 2026-11-23T20:40:53+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+DELETE 25440
+
+# exit    : 0

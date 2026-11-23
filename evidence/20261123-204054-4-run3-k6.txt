@@ -1,0 +1,53 @@
+# command : k6 run -q -e BASE=https://10.0.1.86 tests/load/k6-clock-rush.js
+# time    : 2026-11-23T20:40:54+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+
+
+  █ THRESHOLDS 
+
+    att_errors
+    ✓ 'rate<0.001' rate=0.00%
+
+    http_req_duration{name:clock}
+    ✓ 'p(95)<500' p(95)=20.27ms
+
+    http_req_duration{name:today}
+    ✓ 'p(95)<300' p(95)=25.4ms
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 39299   163.745457/s
+    checks_succeeded...: 100.00% 39299 out of 39299
+    checks_failed......: 0.00%   0 out of 39299
+
+    ✓ today 200
+    ✓ clock accepted
+    ✓ records 200
+
+    CUSTOM
+    att_errors.....................: 0.00%  0 out of 39299
+
+    HTTP
+    http_req_duration..............: avg=13.71ms min=3.58ms med=12.76ms max=146.78ms p(90)=19.18ms p(95)=21.36ms
+      { expected_response:true }...: avg=13.71ms min=3.58ms med=12.76ms max=146.78ms p(90)=19.18ms p(95)=21.36ms
+      { name:clock }...............: avg=13.45ms min=4.64ms med=12.54ms max=146.78ms p(90)=18.47ms p(95)=20.27ms
+      { name:today }...............: avg=17.49ms min=3.58ms med=17.8ms  max=59ms     p(90)=23.36ms p(95)=25.4ms 
+    http_req_failed................: 0.00%  0 out of 39299
+    http_reqs......................: 39299  163.745457/s
+
+    EXECUTION
+    iteration_duration.............: avg=13.91ms min=3.75ms med=12.94ms max=146.87ms p(90)=19.41ms p(95)=21.72ms
+    iterations.....................: 39299  163.745457/s
+    vus............................: 0      min=0          max=9  
+    vus_max........................: 100    min=100        max=100
+
+    NETWORK
+    data_received..................: 12 MB  48 kB/s
+    data_sent......................: 8.2 MB 34 kB/s
+
+
+
+
+# exit    : 0

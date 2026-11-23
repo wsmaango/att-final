@@ -1,0 +1,55 @@
+# command : k6 run -q -e BASE=https://10.0.1.86 tests/load/k6-clock-rush.js
+# time    : 2026-11-23T20:31:25+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+
+
+  █ THRESHOLDS 
+
+    att_errors
+    ✓ 'rate<0.001' rate=0.00%
+
+    http_req_duration{name:clock}
+    ✗ 'p(95)<500' p(95)=1.17s
+
+    http_req_duration{name:today}
+    ✗ 'p(95)<300' p(95)=1.2s
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 39058   162.74045/s
+    checks_succeeded...: 100.00% 39058 out of 39058
+    checks_failed......: 0.00%   0 out of 39058
+
+    ✓ clock accepted
+    ✓ today 200
+    ✓ records 200
+
+    CUSTOM
+    att_errors.....................: 0.00%  0 out of 39058
+
+    HTTP
+    http_req_duration..............: avg=384.71ms min=3.53ms  med=167.08ms max=1.52s p(90)=1.07s p(95)=1.18s
+      { expected_response:true }...: avg=384.71ms min=3.53ms  med=167.08ms max=1.52s p(90)=1.07s p(95)=1.18s
+      { name:clock }...............: avg=385.59ms min=14.08ms med=170.93ms max=1.48s p(90)=1.07s p(95)=1.17s
+      { name:today }...............: avg=395.99ms min=3.53ms  med=175.65ms max=1.52s p(90)=1.1s  p(95)=1.2s 
+    http_req_failed................: 0.00%  0 out of 39058
+    http_reqs......................: 39058  162.74045/s
+
+    EXECUTION
+    dropped_iterations.............: 241    1.004159/s
+    iteration_duration.............: avg=384.96ms min=3.65ms  med=167.34ms max=1.52s p(90)=1.07s p(95)=1.18s
+    iterations.....................: 39058  162.74045/s
+    vus............................: 0      min=0          max=334
+    vus_max........................: 340    min=100        max=340
+
+    NETWORK
+    data_received..................: 12 MB  50 kB/s
+    data_sent......................: 8.5 MB 35 kB/s
+
+
+
+time="2026-11-23T20:35:25+09:00" level=error msg="thresholds on metrics 'http_req_duration{name:clock}, http_req_duration{name:today}' have been crossed"
+
+# exit    : 99

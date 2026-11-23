@@ -1,0 +1,10 @@
+# command : scripts/promq.sh "sum by (status) (increase(att_http_requests_total[10m]))"
+# time    : 2026-11-23T20:29:53+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+query: sum by (status) (increase(att_http_requests_total[10m]))
+{"status":"200"}  10174.602046153846
+{"status":"201"}  21527.179487179485
+{"status":"401"}  0
+
+# exit    : 0

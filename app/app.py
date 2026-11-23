@@ -21,10 +21,12 @@ import json
 import os
 import threading
 import time
+from contextlib import contextmanager
 from datetime import datetime, time as dtime
 from zoneinfo import ZoneInfo
 
 import psycopg
+from psycopg_pool import ConnectionPool
 import redis
 from flask import Flask, Response, g, jsonify, request
 from prometheus_client import CONTENT_TYPE_LATEST, Counter, Gauge, Histogram, generate_latest
@@ -72,8 +74,45 @@ SPOOL_REPLAYED = Counter("att_spool_replayed_total", "Spooled events written to 
 
 
 # ---------------------------------------------------------------- DB
+# 4단계 3회차 개선: 요청마다 새로 접속(TCP + SCRAM 인증 + PostgreSQL 프로세스 fork)하던 것을
+# 연결 풀로 재사용한다. DB_POOL=false 로 끄면 개선 전(요청마다 접속)과 비교할 수 있다.
+# - 정상 종료 시 commit, 예외 시 rollback 후 반환 (psycopg.connect 의 with 와 같은 의미)
+# - as_tenant 는 set_config(..., true) 로 트랜잭션 범위라 연결을 재사용해도 다른 고객사로 새지 않는다
+# - check_connection: 꺼낸 연결이 죽어 있으면(DB 재시작 후) 버리고 새로 맺는다
+# - DB 장애 시: 풀은 연결을 기다리느라 timeout 만큼 막히므로, 한 번 실패하면 1초 동안은
+#   기다리지 않고 바로 실패시킨다(차단기). 그래야 출근 요청이 곧바로 스풀(202)로 간다.
+DB_POOL = os.environ.get("DB_POOL", "true").lower() == "true"
+_pool = None
+_db_down_until = 0.0
+if DB_POOL:
+    _pool = ConnectionPool(
+        DB_DSN,
+        min_size=2,
+        max_size=int(os.environ.get("DB_POOL_MAX", "10")),  # gunicorn 스레드 8 + 스풀 재처리 1 + 여유
+        timeout=1,
+        check=ConnectionPool.check_connection,
+        kwargs={"autocommit": False},
+        open=False,
+        name="att",
+    )
+    _pool.open(wait=False)  # DB 가 아직 안 떠 있어도 앱은 기동 (백그라운드에서 재시도)
+
+
+@contextmanager
 def db():
-    return psycopg.connect(DB_DSN, autocommit=False)
+    global _db_down_until
+    if _pool is None:
+        with psycopg.connect(DB_DSN, autocommit=False) as conn:
+            yield conn
+        return
+    if time.monotonic() < _db_down_until:
+        raise psycopg.OperationalError("DB 연결 차단 중 (직전 연결 실패)")
+    try:
+        with _pool.connection() as conn:
+            yield conn
+    except psycopg.OperationalError:
+        _db_down_until = time.monotonic() + 1.0
+        raise
 
 
 def as_tenant(cur, tenant_id: int):

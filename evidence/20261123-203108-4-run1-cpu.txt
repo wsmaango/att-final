@@ -1,0 +1,13 @@
+# command : scripts/promq.sh "max_over_time((1 - avg by (instance)(rate(node_cpu_seconds_total{mode=\"idle\"}[1m])))[20m:15s])"
+# time    : 2026-11-23T20:31:08+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+query: max_over_time((1 - avg by (instance)(rate(node_cpu_seconds_total{mode="idle"}[1m])))[20m:15s])
+{"instance":"192.168.0.30:9100"}  0.7826666666666673
+{"instance":"192.168.0.40:9100"}  0.660222222222223
+{"instance":"192.168.0.10:9100"}  0.8089999999999995
+{"instance":"192.168.0.20:9100"}  0.13644444444444426
+{"instance":"192.168.0.11:9100"}  0.03911111111111354
+{"instance":"192.168.0.21:9100"}  0.04600000000000104
+
+# exit    : 0

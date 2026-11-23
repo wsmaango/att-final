@@ -1,0 +1,14 @@
+# command : for p in 2203 2204; do echo "== port $p"; scp -q -P $p app/app.py app/requirements.txt ubuntu@$MGMT:/tmp/ && ssh -p $p ubuntu@$MGMT "sudo cp /tmp/app.py /tmp/requirements.txt /opt/att/ && sudo /opt/att/venv/bin/pip install -q -r /opt/att/requirements.txt && sudo systemctl restart att-app && sleep 4 && systemctl is-active att-app && curl -s http://\$(hostname -I | cut -d\" \" -f1):5000/readyz; echo"; done
+# time    : 2026-11-23T20:40:26+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+== port 2203
+active
+{"db":"ok","node":"app01","redis":"ok","spool_pending":0}
+
+== port 2204
+active
+{"db":"ok","node":"app02","redis":"ok","spool_pending":0}
+
+
+# exit    : 0

@@ -13,6 +13,7 @@
 | gunicorn | 23.0.0 | MIT | PyPI | WSGI |
 | redis-py | 5.0.8 | MIT | PyPI | Redis 클라이언트 |
 | psycopg | 3.2.3 | LGPL-3.0 | PyPI | PostgreSQL 클라이언트 (수정 없이 동적 사용) |
+| psycopg-pool | 3.2.4 | LGPL-3.0 | PyPI | DB 연결 풀 (4단계 3회차 개선, 수정 없이 사용) |
 | prometheus-client | 0.21.0 | Apache-2.0 | PyPI | 앱 메트릭 |
 | Terraform CloudStack provider | `TODO` | Apache-2.0 | registry.terraform.io/providers/cloudstack/cloudstack | IaC |
 | k6 | `TODO` | AGPL-3.0 | grafana/k6 | 부하 테스트 (로컬 도구로만 사용) |
