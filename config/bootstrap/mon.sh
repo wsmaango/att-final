@@ -88,6 +88,8 @@ chmod 755 /usr/local/bin/att-backup.sh
 install -d -m 775 -g backup-att /var/lib/prometheus/node-exporter  # textfile collector
 echo "*/15 * * * * backup-att /usr/local/bin/att-backup.sh" > /etc/cron.d/att-backup
 
-ufw allow 3000/tcp comment 'Grafana (perimeter: VPN only)'
-ufw allow 9090/tcp comment 'Prometheus UI (perimeter: VPN only)'
+for c in ${ADMIN_CIDRS:?ADMIN_CIDRS 가 비어 있음}; do   # 7단계: Anywhere → admin_cidrs
+  ufw allow from "$c" to any port 3000 proto tcp comment 'Grafana admin_cidrs only'
+  ufw allow from "$c" to any port 9090 proto tcp comment 'Prometheus UI admin_cidrs only'
+done
 ufw --force enable

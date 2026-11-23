@@ -47,6 +47,11 @@ variable "admin_cidrs" {
     condition     = !contains(var.admin_cidrs, "0.0.0.0/0")
     error_message = "admin_cidrs 에 0.0.0.0/0 을 넣을 수 없습니다."
   }
+  # 7단계: 서버 ufw 도 이 목록으로 SSH·관측 포트를 연다. 비어 있으면 아무도 접속할 수 없게 된다.
+  validation {
+    condition     = length(var.admin_cidrs) > 0
+    error_message = "admin_cidrs 는 최소 1개 필요합니다 (VR 방화벽과 서버 ufw 가 모두 이 목록을 씁니다)."
+  }
 }
 
 variable "service_cidrs" {

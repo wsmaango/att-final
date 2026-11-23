@@ -1,0 +1,54 @@
+# command : checkov -d terraform --external-checks-dir terraform/policies --compact --quiet; echo "---"; checkov -d terraform/policies/tests/bad --external-checks-dir terraform/policies --compact --quiet --check CKV_ATT_1,CKV_ATT_2,CKV_ATT_3,CKV_ATT_4 || echo "(위반 코드는 실패해야 정상)"
+# time    : 2026-11-23T21:30:31+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+secrets scan results:
+
+Passed checks: 0, Failed checks: 2, Skipped checks: 0
+
+Check: CKV_SECRET_6: "Base64 High Entropy String"
+	FAILED for resource: 6b1c51b0767640ba28ed7e1df93e7aac614bfdd0
+	File: /tests/policy.tftest.hcl:10-11
+	Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/secrets-policies/secrets-policy-index/git-secrets-6
+Check: CKV_SECRET_6: "Base64 High Entropy String"
+	FAILED for resource: 814d9776fedcf85dbd37bb646b5014dabbfdc7a8
+	File: /tests/policy.tftest.hcl:11-12
+	Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/secrets-policies/secrets-policy-index/git-secrets-6
+terraform scan results:
+
+Passed checks: 15, Failed checks: 4, Skipped checks: 0
+
+Check: CKV_ATT_1: "ATT1: x.x.x.x/0 에는 80·443 만 열 수 있다 (SSH·관측 포트 전체 공개 금지)"
+	FAILED for resource: cloudstack_firewall.bad_ssh
+	File: /policies/tests/bad/main.tf:2-9
+Check: CKV_ATT_2: "ATT2: VM 에 project·owner·role 태그 필수"
+	FAILED for resource: cloudstack_instance.bad_vm
+	File: /policies/tests/bad/main.tf:11-17
+Check: CKV_ATT_3: "ATT3: VM 오퍼링은 Small·Medium 까지만 (비용 상한)"
+	FAILED for resource: cloudstack_instance.bad_vm
+	File: /policies/tests/bad/main.tf:11-17
+Check: CKV_ATT_4: "ATT4: Egress 는 포트를 지정해야 한다 (protocol all 금지)"
+	FAILED for resource: cloudstack_egress_firewall.bad_egress
+	File: /policies/tests/bad/main.tf:19-25
+
+---
+terraform scan results:
+
+Passed checks: 0, Failed checks: 4, Skipped checks: 0
+
+Check: CKV_ATT_1: "ATT1: x.x.x.x/0 에는 80·443 만 열 수 있다 (SSH·관측 포트 전체 공개 금지)"
+	FAILED for resource: cloudstack_firewall.bad_ssh
+	File: /main.tf:2-9
+Check: CKV_ATT_2: "ATT2: VM 에 project·owner·role 태그 필수"
+	FAILED for resource: cloudstack_instance.bad_vm
+	File: /main.tf:11-17
+Check: CKV_ATT_3: "ATT3: VM 오퍼링은 Small·Medium 까지만 (비용 상한)"
+	FAILED for resource: cloudstack_instance.bad_vm
+	File: /main.tf:11-17
+Check: CKV_ATT_4: "ATT4: Egress 는 포트를 지정해야 한다 (protocol all 금지)"
+	FAILED for resource: cloudstack_egress_firewall.bad_egress
+	File: /main.tf:19-25
+
+(위반 코드는 실패해야 정상)
+
+# exit    : 0

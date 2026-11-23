@@ -1,0 +1,16 @@
+# command : for p in 2201 2202 2203 2205 2206; do ssh -o ConnectTimeout=5 -p $p ubuntu@$MGMT "hostname; sudo systemctl stop ufw-rollback.timer && echo rollback-cancelled"; done
+# time    : 2026-11-23T21:34:15+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+lb01
+rollback-cancelled
+lb02
+rollback-cancelled
+app01
+rollback-cancelled
+data01
+rollback-cancelled
+mon01
+rollback-cancelled
+
+# exit    : 0

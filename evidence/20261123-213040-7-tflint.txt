@@ -1,0 +1,7 @@
+# command : cd terraform && tflint --init >/dev/null && tflint --format compact && echo "tflint: 문제 없음"
+# time    : 2026-11-23T21:30:40+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+tflint: 문제 없음
+
+# exit    : 0

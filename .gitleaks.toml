@@ -1,0 +1,12 @@
+# gitleaks 설정: 기본 규칙을 그대로 쓰고, terraform test(mock provider) 전용 더미 비밀번호만 예외로 둔다.
+# 실제 비밀번호는 저장소에 없고 TF_VAR_redis_password / TF_VAR_db_password 로만 주입한다 (S4·⑤ 시크릿 관리).
+title = "att gitleaks config"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "terraform/tests 의 더미 값 (TestOnly 접두사로만 허용, 다른 파일·값은 계속 탐지)"
+paths = ['''^terraform/tests/policy\.tftest\.hcl$''']
+regexes = ['''TestOnly[A-Za-z]+123''']
+condition = "AND"

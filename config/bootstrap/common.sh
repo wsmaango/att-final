@@ -13,6 +13,7 @@ PasswordAuthentication no
 KbdInteractiveAuthentication no
 PermitRootLogin no
 MaxAuthTries 3
+X11Forwarding no
 CONF
 sshd -t && systemctl reload ssh
 
@@ -20,7 +21,11 @@ sshd -t && systemctl reload ssh
 ufw --force reset
 ufw default deny incoming
 ufw default allow outgoing
-ufw allow 22/tcp comment 'SSH admin (perimeter: VR firewall VPN only)'
+# 7단계: 22 를 Anywhere 로 열고 VR 방화벽만 믿던 것을, 서버에서도 관리자 대역으로 좁힌다 (심층 방어).
+# VR 포트포워딩은 출발지 IP 를 보존한다 (2단계에서 SSH_CLIENT=10.0.10.44 로 확인).
+for c in ${ADMIN_CIDRS:?ADMIN_CIDRS 가 비어 있음}; do
+  ufw allow from "$c" to any port 22 proto tcp comment 'SSH admin_cidrs only'
+done
 ufw allow from "${MON_IP}" to any port 9100 proto tcp comment 'node_exporter from mon'
 ufw logging low
 

@@ -1,0 +1,16 @@
+# command : cd terraform && terraform fmt -check -recursive && terraform validate && terraform test
+# time    : 2026-11-23T21:33:28+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+[32m[1mSuccess![0m The configuration is valid.
+[0m
+tests/policy.tftest.hcl... [37min progress[0m
+[0m  run "network_rules_follow_policy"... [32mpass[0m[0m
+  run "rejects_ssh_open_to_world"... [32mpass[0m[0m
+  run "rejects_oversized_offering"... [32mpass[0m[0m
+tests/policy.tftest.hcl... [37mtearing down[0m
+[0mtests/policy.tftest.hcl... [32mpass[0m[0m
+
+[32mSuccess![0m[0m 3 passed, 0 failed.
+
+# exit    : 0

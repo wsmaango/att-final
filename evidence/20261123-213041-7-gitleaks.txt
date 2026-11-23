@@ -1,0 +1,21 @@
+# command : gitleaks detect --source . --log-opts="--all" --redact -v 2>&1 | tail -n 15
+# time    : 2026-11-23T21:30:41+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+Finding:     db_password         = [1;3;mREDACTED[0m
+Secret:      [1;3;mREDACTED[0m
+RuleID:      hashicorp-tf-password
+Entropy:     3.892407
+File:        terraform/tests/policy.tftest.hcl
+Line:        11
+Commit:      e727fa55ebe5dc25b7d489a1adb0ffb861fef7d2
+Author:      Ubuntu
+Email:       ubuntu@wons-3222323.cs1dku.kloud.internal
+Date:        2026-11-20T07:56:33Z
+Fingerprint: e727fa55ebe5dc25b7d489a1adb0ffb861fef7d2:terraform/tests/policy.tftest.hcl:hashicorp-tf-password:11
+
+[90m9:30PM[0m [32mINF[0m [1m18 commits scanned.[0m
+[90m9:30PM[0m [32mINF[0m [1mscanned ~495163 bytes (495.16 KB) in 339ms[0m
+[90m9:30PM[0m [33mWRN[0m [1mleaks found: 2[0m
+
+# exit    : 1

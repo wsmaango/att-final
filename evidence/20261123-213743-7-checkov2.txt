@@ -1,0 +1,12 @@
+# command : checkov -d terraform --framework terraform --external-checks-dir terraform/policies --skip-path policies/tests --compact --quiet && echo "checkov: 통과"
+# time    : 2026-11-23T21:37:43+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+terraform scan results:
+
+Passed checks: 15, Failed checks: 0, Skipped checks: 0
+
+
+checkov: 통과
+
+# exit    : 0

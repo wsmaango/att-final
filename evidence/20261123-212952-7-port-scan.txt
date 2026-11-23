@@ -1,0 +1,18 @@
+# command : for t in "$SVC 80" "$SVC 443" "$SVC 22" "$SVC 5432" "$SVC 6379" "$SVC 3000" "$SVC 9090" "$MGMT 2201" "$MGMT 3000" "$MGMT 9090" "$MGMT 5432" "$MGMT 80"; do set -- $t; if nc -z -w 3 $1 $2 2>/dev/null; then r=OPEN; else r=closed; fi; printf "%-10s %-5s %s\n" "$1" "$2" "$r"; done
+# time    : 2026-11-23T21:29:52+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+10.0.1.86  80    OPEN
+10.0.1.86  443   OPEN
+10.0.1.86  22    closed
+10.0.1.86  5432  closed
+10.0.1.86  6379  closed
+10.0.1.86  3000  closed
+10.0.1.86  9090  closed
+10.0.1.87  2201  OPEN
+10.0.1.87  3000  OPEN
+10.0.1.87  9090  OPEN
+10.0.1.87  5432  closed
+10.0.1.87  80    closed
+
+# exit    : 0

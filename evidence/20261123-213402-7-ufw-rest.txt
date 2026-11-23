@@ -1,0 +1,73 @@
+# command : for p in 2201 2202 2203 2205 2206; do { echo "ADMIN_CIDRS=\"10.8.0.0/24 10.0.10.44/32\""; cat scripts/live/ufw-admin-only.sh; } | ssh -p $p ubuntu@$MGMT "sudo bash -s"; done
+# time    : 2026-11-23T21:34:02+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+rollback timer: 3분 뒤 자동 복구 (취소: systemctl stop ufw-rollback.timer)
+--- lb01
+To                         Action      From
+--                         ------      ----
+9100/tcp                   ALLOW       192.168.0.40               # node_exporter from mon
+80/tcp                     ALLOW       Anywhere                   # HTTP redirect
+443/tcp                    ALLOW       Anywhere                   # HTTPS service
+9113/tcp                   ALLOW       192.168.0.40               # nginx exporter from mon
+22/tcp                     ALLOW       10.8.0.0/24                # SSH admin_cidrs only
+22/tcp                     ALLOW       10.0.10.44                 # SSH admin_cidrs only
+80/tcp (v6)                ALLOW       Anywhere (v6)              # HTTP redirect
+443/tcp (v6)               ALLOW       Anywhere (v6)              # HTTPS service
+
+x11forwarding no
+rollback timer: 3분 뒤 자동 복구 (취소: systemctl stop ufw-rollback.timer)
+--- lb02
+To                         Action      From
+--                         ------      ----
+9100/tcp                   ALLOW       192.168.0.40               # node_exporter from mon
+80/tcp                     ALLOW       Anywhere                   # HTTP redirect
+443/tcp                    ALLOW       Anywhere                   # HTTPS service
+9113/tcp                   ALLOW       192.168.0.40               # nginx exporter from mon
+22/tcp                     ALLOW       10.8.0.0/24                # SSH admin_cidrs only
+22/tcp                     ALLOW       10.0.10.44                 # SSH admin_cidrs only
+80/tcp (v6)                ALLOW       Anywhere (v6)              # HTTP redirect
+443/tcp (v6)               ALLOW       Anywhere (v6)              # HTTPS service
+
+x11forwarding no
+rollback timer: 3분 뒤 자동 복구 (취소: systemctl stop ufw-rollback.timer)
+--- app01
+To                         Action      From
+--                         ------      ----
+9100/tcp                   ALLOW       192.168.0.40               # node_exporter from mon
+5000/tcp                   ALLOW       192.168.0.20               # API from lb
+5000/tcp                   ALLOW       192.168.0.21               # API from lb
+5000/tcp                   ALLOW       192.168.0.40               # /metrics from mon
+22/tcp                     ALLOW       10.8.0.0/24                # SSH admin_cidrs only
+22/tcp                     ALLOW       10.0.10.44                 # SSH admin_cidrs only
+
+x11forwarding no
+rollback timer: 3분 뒤 자동 복구 (취소: systemctl stop ufw-rollback.timer)
+--- data01
+To                         Action      From
+--                         ------      ----
+9100/tcp                   ALLOW       192.168.0.40               # node_exporter from mon
+5432/tcp                   ALLOW       192.168.0.10               # PostgreSQL from app
+6379/tcp                   ALLOW       192.168.0.10               # Redis from app
+5432/tcp                   ALLOW       192.168.0.11               # PostgreSQL from app
+6379/tcp                   ALLOW       192.168.0.11               # Redis from app
+5432/tcp                   ALLOW       192.168.0.40               # pg_dump backup from mon
+22/tcp                     ALLOW       10.8.0.0/24                # SSH admin_cidrs only
+22/tcp                     ALLOW       10.0.10.44                 # SSH admin_cidrs only
+
+x11forwarding no
+rollback timer: 3분 뒤 자동 복구 (취소: systemctl stop ufw-rollback.timer)
+--- mon01
+To                         Action      From
+--                         ------      ----
+9100/tcp                   ALLOW       192.168.0.40               # node_exporter from mon
+3000/tcp                   ALLOW       Anywhere                   # Grafana (perimeter: VPN only)
+9090/tcp                   ALLOW       Anywhere                   # Prometheus UI (perimeter: VPN only)
+22/tcp                     ALLOW       10.8.0.0/24                # SSH admin_cidrs only
+22/tcp                     ALLOW       10.0.10.44                 # SSH admin_cidrs only
+3000/tcp (v6)              ALLOW       Anywhere (v6)              # Grafana (perimeter: VPN only)
+9090/tcp (v6)              ALLOW       Anywhere (v6)              # Prometheus UI (perimeter: VPN only)
+
+x11forwarding no
+
+# exit    : 0

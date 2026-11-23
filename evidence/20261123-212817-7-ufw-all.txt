@@ -1,0 +1,103 @@
+# command : for p in 2201 2202 2203 2204 2205 2206; do echo "===== port $p"; ssh -p $p ubuntu@$MGMT "hostname; sudo ufw status verbose | sed -n \"1,4p;/^To/,\\\$p\""; done
+# time    : 2026-11-23T21:28:17+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+===== port 2201
+lb01
+Status: active
+Logging: on (low)
+Default: deny (incoming), allow (outgoing), disabled (routed)
+New profiles: skip
+To                         Action      From
+--                         ------      ----
+22/tcp                     ALLOW IN    Anywhere                   # SSH admin (perimeter: VR firewall VPN only)
+9100/tcp                   ALLOW IN    192.168.0.40               # node_exporter from mon
+80/tcp                     ALLOW IN    Anywhere                   # HTTP redirect
+443/tcp                    ALLOW IN    Anywhere                   # HTTPS service
+9113/tcp                   ALLOW IN    192.168.0.40               # nginx exporter from mon
+22/tcp (v6)                ALLOW IN    Anywhere (v6)              # SSH admin (perimeter: VR firewall VPN only)
+80/tcp (v6)                ALLOW IN    Anywhere (v6)              # HTTP redirect
+443/tcp (v6)               ALLOW IN    Anywhere (v6)              # HTTPS service
+
+===== port 2202
+lb02
+Status: active
+Logging: on (low)
+Default: deny (incoming), allow (outgoing), disabled (routed)
+New profiles: skip
+To                         Action      From
+--                         ------      ----
+22/tcp                     ALLOW IN    Anywhere                   # SSH admin (perimeter: VR firewall VPN only)
+9100/tcp                   ALLOW IN    192.168.0.40               # node_exporter from mon
+80/tcp                     ALLOW IN    Anywhere                   # HTTP redirect
+443/tcp                    ALLOW IN    Anywhere                   # HTTPS service
+9113/tcp                   ALLOW IN    192.168.0.40               # nginx exporter from mon
+22/tcp (v6)                ALLOW IN    Anywhere (v6)              # SSH admin (perimeter: VR firewall VPN only)
+80/tcp (v6)                ALLOW IN    Anywhere (v6)              # HTTP redirect
+443/tcp (v6)               ALLOW IN    Anywhere (v6)              # HTTPS service
+
+===== port 2203
+app01
+Status: active
+Logging: on (low)
+Default: deny (incoming), allow (outgoing), disabled (routed)
+New profiles: skip
+To                         Action      From
+--                         ------      ----
+22/tcp                     ALLOW IN    Anywhere                   # SSH admin (perimeter: VR firewall VPN only)
+9100/tcp                   ALLOW IN    192.168.0.40               # node_exporter from mon
+5000/tcp                   ALLOW IN    192.168.0.20               # API from lb
+5000/tcp                   ALLOW IN    192.168.0.21               # API from lb
+5000/tcp                   ALLOW IN    192.168.0.40               # /metrics from mon
+22/tcp (v6)                ALLOW IN    Anywhere (v6)              # SSH admin (perimeter: VR firewall VPN only)
+
+===== port 2204
+app02
+Status: active
+Logging: on (low)
+Default: deny (incoming), allow (outgoing), disabled (routed)
+New profiles: skip
+To                         Action      From
+--                         ------      ----
+22/tcp                     ALLOW IN    Anywhere                   # SSH admin (perimeter: VR firewall VPN only)
+9100/tcp                   ALLOW IN    192.168.0.40               # node_exporter from mon
+5000/tcp                   ALLOW IN    192.168.0.20               # API from lb
+5000/tcp                   ALLOW IN    192.168.0.21               # API from lb
+5000/tcp                   ALLOW IN    192.168.0.40               # /metrics from mon
+22/tcp (v6)                ALLOW IN    Anywhere (v6)              # SSH admin (perimeter: VR firewall VPN only)
+
+===== port 2205
+data01
+Status: active
+Logging: on (low)
+Default: deny (incoming), allow (outgoing), disabled (routed)
+New profiles: skip
+To                         Action      From
+--                         ------      ----
+22/tcp                     ALLOW IN    Anywhere                   # SSH admin (perimeter: VR firewall VPN only)
+9100/tcp                   ALLOW IN    192.168.0.40               # node_exporter from mon
+5432/tcp                   ALLOW IN    192.168.0.10               # PostgreSQL from app
+6379/tcp                   ALLOW IN    192.168.0.10               # Redis from app
+5432/tcp                   ALLOW IN    192.168.0.11               # PostgreSQL from app
+6379/tcp                   ALLOW IN    192.168.0.11               # Redis from app
+5432/tcp                   ALLOW IN    192.168.0.40               # pg_dump backup from mon
+22/tcp (v6)                ALLOW IN    Anywhere (v6)              # SSH admin (perimeter: VR firewall VPN only)
+
+===== port 2206
+mon01
+Status: active
+Logging: on (low)
+Default: deny (incoming), allow (outgoing), disabled (routed)
+New profiles: skip
+To                         Action      From
+--                         ------      ----
+22/tcp                     ALLOW IN    Anywhere                   # SSH admin (perimeter: VR firewall VPN only)
+9100/tcp                   ALLOW IN    192.168.0.40               # node_exporter from mon
+3000/tcp                   ALLOW IN    Anywhere                   # Grafana (perimeter: VPN only)
+9090/tcp                   ALLOW IN    Anywhere                   # Prometheus UI (perimeter: VPN only)
+22/tcp (v6)                ALLOW IN    Anywhere (v6)              # SSH admin (perimeter: VR firewall VPN only)
+3000/tcp (v6)              ALLOW IN    Anywhere (v6)              # Grafana (perimeter: VPN only)
+9090/tcp (v6)              ALLOW IN    Anywhere (v6)              # Prometheus UI (perimeter: VPN only)
+
+
+# exit    : 0

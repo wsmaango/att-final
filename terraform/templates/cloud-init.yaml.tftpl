@@ -16,6 +16,7 @@ write_files:
       APP_IPS="${join(" ", topology.app_ips)}"
       ALL_IPS="${join(" ", topology.all_ips)}"
       NET_CIDR="${topology.net_cidr}"
+      ADMIN_CIDRS="${join(" ", admin_cidrs)}"
       REDIS_PASSWORD="${redis_password}"
       DB_PASSWORD="${db_password}"
 %{ for path, content in files ~}

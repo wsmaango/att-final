@@ -1,0 +1,19 @@
+# command : { echo "ADMIN_CIDRS=\"10.8.0.0/24 10.0.10.44/32\""; cat scripts/live/ufw-admin-only.sh; } | ssh -p 2206 ubuntu@$MGMT "sudo bash -s"
+# time    : 2026-11-23T21:35:54+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+rollback timer: 3분 뒤 자동 복구 (취소: systemctl stop ufw-rollback.timer)
+--- mon01
+To                         Action      From
+--                         ------      ----
+9100/tcp                   ALLOW       192.168.0.40               # node_exporter from mon
+22/tcp                     ALLOW       10.8.0.0/24                # SSH admin_cidrs only
+22/tcp                     ALLOW       10.0.10.44                 # SSH admin_cidrs only
+3000/tcp                   ALLOW       10.8.0.0/24                # Grafana admin_cidrs only
+3000/tcp                   ALLOW       10.0.10.44                 # Grafana admin_cidrs only
+9090/tcp                   ALLOW       10.8.0.0/24                # Prometheus UI admin_cidrs only
+9090/tcp                   ALLOW       10.0.10.44                 # Prometheus UI admin_cidrs only
+
+x11forwarding no
+
+# exit    : 0

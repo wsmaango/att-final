@@ -116,6 +116,7 @@ resource "cloudstack_instance" "node" {
     topology       = local.topology
     redis_password = var.redis_password
     db_password    = var.db_password
+    admin_cidrs    = var.admin_cidrs
     files          = merge(local.bootstrap_common, local.bootstrap_role[each.value.role])
   })
 

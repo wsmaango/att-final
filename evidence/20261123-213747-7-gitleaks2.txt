@@ -1,0 +1,9 @@
+# command : gitleaks detect --source . --log-opts="--all" --redact 2>&1 | tail -n 3
+# time    : 2026-11-23T21:37:47+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+[90m9:37PM[0m [32mINF[0m [1m18 commits scanned.[0m
+[90m9:37PM[0m [32mINF[0m [1mscanned ~495163 bytes (495.16 KB) in 297ms[0m
+[90m9:37PM[0m [32mINF[0m [1mno leaks found[0m
+
+# exit    : 0
