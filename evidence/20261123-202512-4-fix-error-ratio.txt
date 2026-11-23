@@ -1,0 +1,10 @@
+# command : ssh -p 2206 ubuntu@$MGMT "sudo tee /etc/prometheus/rules/att.yml >/dev/null && sudo promtool check rules /etc/prometheus/rules/att.yml && sudo systemctl reload prometheus && echo reloaded" < config/prometheus/alerts.yml
+# time    : 2026-11-23T20:25:12+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+Checking /etc/prometheus/rules/att.yml
+  SUCCESS: 10 rules found
+
+reloaded
+
+# exit    : 0

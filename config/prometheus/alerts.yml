@@ -20,7 +20,7 @@ groups:
       # SLI: 5xx 가 아닌 응답 비율 / SLO 99.9%
       - record: att:error_ratio:5m
         expr: |
-          sum(rate(att_http_requests_total{status=~"5.."}[5m]))
+          (sum(rate(att_http_requests_total{status=~"5.."}[5m])) or vector(0))
           / clamp_min(sum(rate(att_http_requests_total[5m])), 1e-9)
       - alert: ErrorBudgetBurnFast
         expr: att:error_ratio:5m > 0.01

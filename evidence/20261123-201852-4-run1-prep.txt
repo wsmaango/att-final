@@ -1,0 +1,8 @@
+# command : ssh -p 2205 ubuntu@$MGMT "sudo -u postgres psql -d att -c \"DELETE FROM attendance WHERE work_date = current_date\""; ssh -p 2204 ubuntu@$MGMT "sudo systemctl stop att-app; systemctl is-active att-app"
+# time    : 2026-11-23T20:18:52+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+DELETE 1
+inactive
+
+# exit    : 3
