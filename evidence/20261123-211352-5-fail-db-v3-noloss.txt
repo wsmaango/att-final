@@ -1,0 +1,10 @@
+# command : tests/failover/verify-no-loss.sh evidence/20261123-211144-5-fail-db-v3.txt 10.0.1.87
+# time    : 2026-11-23T21:13:52+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+접수 성공 사원 수(로그): 350
+DB 에 기록된 사원 수:     350
+그중 스풀 재적재(오늘):   181
+유실: 0건
+
+# exit    : 0

@@ -1,0 +1,12 @@
+# command : for p in 2203 2204; do echo "== port $p"; scp -q -P $p app/app.py ubuntu@$MGMT:/tmp/ && ssh -p $p ubuntu@$MGMT "sudo cp /tmp/app.py /opt/att/ && sudo systemctl restart att-app && sleep 6 && systemctl is-active att-app && curl -s http://\$(hostname -I | cut -d\" \" -f1):5000/metrics | grep ^att_db_up"; done
+# time    : 2026-11-23T21:10:11+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+== port 2203
+active
+att_db_up 1.0
+== port 2204
+active
+att_db_up 1.0
+
+# exit    : 0

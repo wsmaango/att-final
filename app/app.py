@@ -80,11 +80,13 @@ SPOOL_REPLAYED = Counter("att_spool_replayed_total", "Spooled events written to 
 # - 정상 종료 시 commit, 예외 시 rollback 후 반환 (psycopg.connect 의 with 와 같은 의미)
 # - as_tenant 는 set_config(..., true) 로 트랜잭션 범위라 연결을 재사용해도 다른 고객사로 새지 않는다
 # - check_connection: 꺼낸 연결이 죽어 있으면(DB 재시작 후) 버리고 새로 맺는다
-# - DB 장애 시: 풀은 연결을 기다리느라 timeout 만큼 막히므로, 한 번 실패하면 1초 동안은
-#   기다리지 않고 바로 실패시킨다(차단기). 그래야 출근 요청이 곧바로 스풀(202)로 간다.
+# - DB 장애 시: 풀은 연결을 기다리느라 timeout 만큼 막히므로, 한 번 실패하면 차단기를 연다.
+#   차단기가 열려 있는 동안 사용자 요청은 DB 를 기다리지 않고 곧바로 스풀(202)로 간다.
+#   차단기를 닫는(복구 판단) 일은 사용자 요청이 아니라 백그라운드 확인(_probe_db, 3초마다)만 한다.
+#   (5단계 재측정: 1초마다 사용자 요청이 시험 삼아 DB 를 기다리게 했더니 장애 중 17% 가 0.5초를 넘었다)
 DB_POOL = os.environ.get("DB_POOL", "true").lower() == "true"
 _pool = None
-_db_down_until = 0.0
+_db_breaker_open = False
 if DB_POOL:
     _pool = ConnectionPool(
         DB_DSN,
@@ -101,18 +103,18 @@ if DB_POOL:
 
 @contextmanager
 def db():
-    global _db_down_until
+    global _db_breaker_open
     if _pool is None:
         with psycopg.connect(DB_DSN, autocommit=False) as conn:
             yield conn
         return
-    if time.monotonic() < _db_down_until:
-        raise psycopg.OperationalError("DB 연결 차단 중 (직전 연결 실패)")
+    if _db_breaker_open:
+        raise psycopg.OperationalError("DB 연결 차단 중 (백그라운드 확인이 복구를 확인할 때까지)")
     try:
         with _pool.connection() as conn:
             yield conn
     except psycopg.OperationalError:
-        _db_down_until = time.monotonic() + 1.0
+        _db_breaker_open = True
         raise
 
 
@@ -280,13 +282,16 @@ def replay_spool_once() -> int:
 
 
 def _probe_db():
-    """풀·차단기와 별개로 매번 새로 접속해 본다 (DB 장애 탐지용, 5단계 개선)."""
+    """풀과 별개로 매번 새로 접속해 본다. 탐지 지표(att_db_up)이자 차단기의 유일한 복구 판단."""
+    global _db_breaker_open
     try:
         with psycopg.connect(DB_DSN) as c:
             c.execute("SELECT 1")
         DB_UP.set(1)
+        _db_breaker_open = False
     except Exception:  # noqa: BLE001
         DB_UP.set(0)
+        _db_breaker_open = True
 
 
 def _replayer():

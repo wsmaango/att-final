@@ -5,7 +5,12 @@ IP=${1:?service_ip}; B="https://${IP}"; K1='X-Api-Key: demo-key-tenant-1'; K2='X
 J='Content-Type: application/json'; ok=0; fail=0
 code() { curl -sk -o /dev/null -w '%{http_code}' "$@"; }
 t() { if [ "$2" = "$3" ]; then echo "PASS  $1"; ok=$((ok+1)); else echo "FAIL  $1 (expected $3, got $2)"; fail=$((fail+1)); fi; }
-EMP=$(printf 'E%04d' $(( RANDOM % 20000 + 1 )))
+# 고객사 2 에 기록이 없는 사번을 고른다. 부하 테스트(k6)가 같은 사번 범위를 무작위로 쓰기 때문에,
+# 아무 사번이나 고르면 고객사 2 의 "자기" 기록이 보여 분리 실패로 오판한다 (5단계에서 실제로 발생).
+for _ in $(seq 1 30); do
+  EMP=$(printf 'E%04d' $(( RANDOM % 20000 + 1 )))
+  [ "$(curl -sk -H "$K2" ${B}/api/employees/${EMP}/records)" = "[]" ] && break
+done
 t "HTTP → HTTPS 301"         "$(code http://${IP}/)" 301
 t "readyz 200 (DB 연결)"      "$(code ${B}/readyz)" 200
 t "키 없으면 401"             "$(code -XPOST -H "$J" -d '{"emp_no":"E0001"}' ${B}/api/clock)" 401

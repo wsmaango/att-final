@@ -1,0 +1,15 @@
+# command : scripts/smoke-test.sh 10.0.1.86
+# time    : 2026-11-23T21:10:28+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+PASS  HTTP → HTTPS 301
+PASS  readyz 200 (DB 연결)
+PASS  키 없으면 401
+PASS  출근 201 또는 200(중복)
+PASS  같은 출근 재요청 200(멱등)
+PASS  현황 200
+FAIL  다른 고객사에서는 기록 안 보임 (expected [], got [{"date":"2026-11-23","kind":"in","source":"api","ts":"2026-11-23T11:42:41.928700+00:00"}])
+PASS  두 app 노드가 모두 응답
+pass=7 fail=1
+
+# exit    : 1

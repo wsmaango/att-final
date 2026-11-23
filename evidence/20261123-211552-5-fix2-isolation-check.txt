@@ -1,0 +1,11 @@
+# command : ssh -p 2205 ubuntu@$MGMT "sudo -u postgres psql -d att -c \"SELECT tenant_id, emp_no, source, ts FROM attendance WHERE ts = '2026-11-23 11:42:41.9287+00'\""
+# time    : 2026-11-23T21:15:52+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+ tenant_id | emp_no | source |             ts              
+-----------+--------+--------+-----------------------------
+         2 | E4070  | api    | 2026-11-23 11:42:41.9287+00
+(1 row)
+
+
+# exit    : 0
