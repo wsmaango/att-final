@@ -1,0 +1,24 @@
+# command : for p in 2201 2202 2203 2204 2205 2206; do ssh -p $p ubuntu@$MGMT "hostname; cloud-init status; grep \"finished at\" /var/log/cloud-init-output.log | tail -1"; done
+# time    : 2026-11-23T20:12:28+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+lb01
+status: done
+Cloud-init v. 25.1.4-0ubuntu0~24.04.1 finished at Mon, 23 Nov 2026 11:10:47 +0000. Datasource DataSourceCloudStack.  Up 1234.24 seconds
+lb02
+status: done
+Cloud-init v. 25.1.4-0ubuntu0~24.04.1 finished at Mon, 23 Nov 2026 11:09:05 +0000. Datasource DataSourceCloudStack.  Up 1127.23 seconds
+app01
+status: done
+Cloud-init v. 25.1.4-0ubuntu0~24.04.1 finished at Mon, 23 Nov 2026 11:07:01 +0000. Datasource DataSourceCloudStack.  Up 1004.77 seconds
+app02
+status: done
+Cloud-init v. 25.1.4-0ubuntu0~24.04.1 finished at Mon, 23 Nov 2026 11:07:00 +0000. Datasource DataSourceCloudStack.  Up 995.93 seconds
+data01
+status: done
+Cloud-init v. 25.1.4-0ubuntu0~24.04.1 finished at Mon, 23 Nov 2026 11:07:05 +0000. Datasource DataSourceCloudStack.  Up 1010.14 seconds
+mon01
+status: done
+Cloud-init v. 25.1.4-0ubuntu0~24.04.1 finished at Mon, 23 Nov 2026 11:11:34 +0000. Datasource DataSourceCloudStack.  Up 1286.37 seconds
+
+# exit    : 0
