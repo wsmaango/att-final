@@ -1,5 +1,5 @@
 # command : git check-ignore terraform/terraform.tfvars && cat terraform/terraform.tfvars
-# time    : 2026-11-23T17:22:12+09:00
+# time    : 2026-11-23T17:24:35+09:00
 # host    : wons-3222323   cwd: /home/ubuntu/att-final
 
 terraform/terraform.tfvars
@@ -22,7 +22,5 @@ entry_lb   = "lb01"
 ssh_public_key_path = "~/.ssh/id_ed25519.pub"
 
 # 시크릿은 아래 대신 환경변수 권장: export TF_VAR_redis_password=... TF_VAR_db_password=... (영문·숫자 12~40자)
-redis_password = "CHANGEMEdummy123"
-db_password    = "CHANGEMEdummy456"
 
 # exit    : 0
