@@ -1,0 +1,10 @@
+# command : ssh -p 2206 ubuntu@10.0.1.86 'systemctl is-active prometheus grafana-server; sudo ls -lt /var/backups/att | head -3'
+# time    : 2026-11-23T18:27:39+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+active
+active
+total 12
+-rw-rw-r-- 1 backup-att backup-att 8677 Nov 23 09:15 att-20261123T091502.dump
+
+# exit    : 0

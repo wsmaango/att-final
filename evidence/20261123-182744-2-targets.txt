@@ -1,0 +1,17 @@
+# command : curl -s $PROM/api/v1/targets | jq -r ".data.activeTargets[] | \"\(.labels.job) \(.labels.instance) \(.health)\""
+# time    : 2026-11-23T18:27:44+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+app 192.168.0.11:5000 up
+app 192.168.0.10:5000 up
+nginx 192.168.0.20:9113 up
+nginx 192.168.0.21:9113 up
+node 192.168.0.21:9100 up
+node 192.168.0.40:9100 up
+node 192.168.0.10:9100 up
+node 192.168.0.11:9100 up
+node 192.168.0.30:9100 up
+node 192.168.0.20:9100 up
+prometheus localhost:9090 up
+
+# exit    : 0

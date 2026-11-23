@@ -1,0 +1,23 @@
+# command : ssh -o StrictHostKeyChecking=accept-new -p 2205 ubuntu@10.0.1.86 'cloud-init status --wait; sudo ufw status numbered; sudo sshd -T | grep -E "passwordauthentication|permitrootlogin"'
+# time    : 2026-11-23T18:24:27+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+Warning: Permanently added '[10.0.1.86]:2205' (ED25519) to the list of known hosts.
+status: done
+Status: active
+
+     To                         Action      From
+     --                         ------      ----
+[ 1] 22/tcp                     ALLOW IN    Anywhere                   # SSH admin (perimeter: VR firewall VPN only)
+[ 2] 9100/tcp                   ALLOW IN    192.168.0.40               # node_exporter from mon
+[ 3] 5432/tcp                   ALLOW IN    192.168.0.10               # PostgreSQL from app
+[ 4] 6379/tcp                   ALLOW IN    192.168.0.10               # Redis from app
+[ 5] 5432/tcp                   ALLOW IN    192.168.0.11               # PostgreSQL from app
+[ 6] 6379/tcp                   ALLOW IN    192.168.0.11               # Redis from app
+[ 7] 5432/tcp                   ALLOW IN    192.168.0.40               # pg_dump backup from mon
+[ 8] 22/tcp (v6)                ALLOW IN    Anywhere (v6)              # SSH admin (perimeter: VR firewall VPN only)
+
+permitrootlogin no
+passwordauthentication no
+
+# exit    : 0

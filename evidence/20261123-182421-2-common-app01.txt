@@ -1,0 +1,21 @@
+# command : ssh -o StrictHostKeyChecking=accept-new -p 2203 ubuntu@10.0.1.86 'cloud-init status --wait; sudo ufw status numbered; sudo sshd -T | grep -E "passwordauthentication|permitrootlogin"'
+# time    : 2026-11-23T18:24:21+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+Warning: Permanently added '[10.0.1.86]:2203' (ED25519) to the list of known hosts.
+status: done
+Status: active
+
+     To                         Action      From
+     --                         ------      ----
+[ 1] 22/tcp                     ALLOW IN    Anywhere                   # SSH admin (perimeter: VR firewall VPN only)
+[ 2] 9100/tcp                   ALLOW IN    192.168.0.40               # node_exporter from mon
+[ 3] 5000/tcp                   ALLOW IN    192.168.0.20               # API from lb
+[ 4] 5000/tcp                   ALLOW IN    192.168.0.21               # API from lb
+[ 5] 5000/tcp                   ALLOW IN    192.168.0.40               # /metrics from mon
+[ 6] 22/tcp (v6)                ALLOW IN    Anywhere (v6)              # SSH admin (perimeter: VR firewall VPN only)
+
+permitrootlogin no
+passwordauthentication no
+
+# exit    : 0

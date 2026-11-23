@@ -1,0 +1,12 @@
+# command : ssh -p 2205 ubuntu@10.0.1.86 'systemctl is-active postgresql redis-server; sudo ss -tlnp | grep -E ":5432|:6379"'
+# time    : 2026-11-23T18:26:18+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+active
+active
+LISTEN 0      200     192.168.0.30:5432      x.x.x.x:*    users:(("postgres",pid=6233,fd=7))                    
+LISTEN 0      511        127.0.0.1:6379      x.x.x.x:*    users:(("redis-server",pid=6209,fd=6))                
+LISTEN 0      511     192.168.0.30:6379      x.x.x.x:*    users:(("redis-server",pid=6209,fd=7))                
+LISTEN 0      200        127.0.0.1:5432      x.x.x.x:*    users:(("postgres",pid=6233,fd=6))                    
+
+# exit    : 0
