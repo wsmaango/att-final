@@ -33,6 +33,23 @@ SQL
 sudo -u postgres psql -tc "SELECT 1 FROM pg_database WHERE datname='att'" | grep -q 1 \
   || sudo -u postgres createdb -O att att
 
+# --- 백업 전용 역할 (6단계에서 추가, scripts/live/backup-role-data01.sh 와 같은 내용) ---
+# 앱 테이블은 FORCE ROW LEVEL SECURITY 라 소유자(att)로 pg_dump 하면 RLS 오류로 실패한다.
+# att 를 약하게 만들지 않고, 읽기 전용 + BYPASSRLS 역할을 mon01 에서만 쓰게 한다.
+grep -q ' att_backup ' ${PGCONF}/pg_hba.conf || echo "host att att_backup ${MON_IP}/32 scram-sha-256" >> ${PGCONF}/pg_hba.conf
+sudo -u postgres psql -v ON_ERROR_STOP=1 -q <<SQL
+SELECT 'CREATE ROLE att_backup LOGIN BYPASSRLS' WHERE NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'att_backup')\\gexec
+ALTER ROLE att_backup PASSWORD '${DB_PASSWORD}';
+GRANT CONNECT ON DATABASE att TO att_backup;
+\\c att
+GRANT USAGE ON SCHEMA public TO att_backup;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO att_backup;
+GRANT SELECT ON ALL SEQUENCES IN SCHEMA public TO att_backup;
+ALTER DEFAULT PRIVILEGES FOR ROLE att IN SCHEMA public GRANT SELECT ON TABLES TO att_backup;
+ALTER DEFAULT PRIVILEGES FOR ROLE att IN SCHEMA public GRANT SELECT ON SEQUENCES TO att_backup;
+SQL
+systemctl reload postgresql
+
 for ip in ${APP_IPS}; do
   ufw allow from "${ip}" to any port 5432 proto tcp comment 'PostgreSQL from app'
   ufw allow from "${ip}" to any port 6379 proto tcp comment 'Redis from app'

@@ -1,0 +1,7 @@
+# command : { echo "DBPW=$TF_VAR_db_password"; echo "DATA_IP=192.168.0.30"; cat scripts/live/backup-job-mon01.sh; } | ssh -p 2206 ubuntu@$MGMT "sudo bash -s"
+# time    : 2026-11-23T21:23:01+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+updated /usr/local/bin/att-backup.sh
+
+# exit    : 0

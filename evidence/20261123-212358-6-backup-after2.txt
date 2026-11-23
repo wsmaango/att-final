@@ -1,0 +1,13 @@
+# command : ssh -p 2206 ubuntu@$MGMT "sudo -u backup-att /usr/local/bin/att-backup.sh && echo backup-ok; sudo ls -la /var/backups/att/; cat /var/lib/prometheus/node-exporter/att_backup.prom"
+# time    : 2026-11-23T21:23:58+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+backup-ok
+total 1256
+drwx------ 2 backup-att backup-att   4096 Nov 23 12:23 .
+drwxr-xr-x 3 root       root         4096 Nov 23 11:11 ..
+-rw-rw-r-- 1 backup-att backup-att 635056 Nov 23 12:23 att-20261123T122319.dump
+-rw-rw-r-- 1 backup-att backup-att 635056 Nov 23 12:23 att-20261123T122359.dump
+att_backup_last_success_timestamp 1795436639
+
+# exit    : 0

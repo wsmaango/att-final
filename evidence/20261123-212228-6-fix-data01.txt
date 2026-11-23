@@ -1,0 +1,8 @@
+# command : { echo "DBPW=$TF_VAR_db_password"; cat scripts/live/backup-role-data01.sh; } | ssh -p 2205 ubuntu@$MGMT "sudo bash -s"
+# time    : 2026-11-23T21:22:28+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+att_backup|t|f|f
+host att att_backup 192.168.0.40/32 scram-sha-256
+
+# exit    : 0

@@ -1,0 +1,18 @@
+# command : ssh -p 2206 ubuntu@$MGMT "sudo -u backup-att /usr/local/bin/att-backup.sh && echo backup-ok; sudo find /var/backups/att -name \"att-*.dump\" -size -20k -print -delete; sudo ls -la /var/backups/att/; cat /var/lib/prometheus/node-exporter/att_backup.prom"
+# time    : 2026-11-23T21:23:19+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+find: Failed to restore initial working directory: /home/ubuntu: Permission denied
+/var/backups/att/att-20261123T121501.dump
+/var/backups/att/att-20261123T114501.dump
+/var/backups/att/att-20261123T121744.dump
+/var/backups/att/att-20261123T111501.dump
+/var/backups/att/att-20261123T120001.dump
+/var/backups/att/att-20261123T113001.dump
+total 632
+drwx------ 2 backup-att backup-att   4096 Nov 23 12:23 .
+drwxr-xr-x 3 root       root         4096 Nov 23 11:11 ..
+-rw-rw-r-- 1 backup-att backup-att 635056 Nov 23 12:23 att-20261123T122319.dump
+cat: /var/lib/prometheus/node-exporter/att_backup.prom: No such file or directory
+
+# exit    : 1

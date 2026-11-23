@@ -1,0 +1,21 @@
+# command : ssh -p 2206 ubuntu@$MGMT "sudo ls -la /var/backups/att/; echo ---; sudo -u backup-att /usr/local/bin/att-backup.sh; echo exit=\$?; echo ---; ls -la /var/lib/prometheus/node-exporter/ | grep backup || echo 성공-지표-없음"
+# time    : 2026-11-23T21:17:43+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+total 68
+drwx------ 2 backup-att backup-att 4096 Nov 23 12:15 .
+drwxr-xr-x 3 root       root       4096 Nov 23 11:11 ..
+-rw-rw-r-- 1 backup-att backup-att 8676 Nov 23 11:15 att-20261123T111501.dump
+-rw-rw-r-- 1 backup-att backup-att 8680 Nov 23 11:30 att-20261123T113001.dump
+-rw-rw-r-- 1 backup-att backup-att 8680 Nov 23 11:45 att-20261123T114501.dump
+-rw-rw-r-- 1 backup-att backup-att 8680 Nov 23 12:00 att-20261123T120001.dump
+-rw-rw-r-- 1 backup-att backup-att 8680 Nov 23 12:15 att-20261123T121501.dump
+---
+pg_dump: error: query failed: ERROR:  query would be affected by row-level security policy for table "attendance"
+HINT:  To disable the policy for the table's owner, use ALTER TABLE NO FORCE ROW LEVEL SECURITY.
+pg_dump: detail: Query was: COPY public.attendance (id, tenant_id, emp_no, kind, work_date, ts, source) TO stdout;
+exit=1
+---
+drwxrwxr-x 2 root       backup-att 4096 Nov 23 12:03 .
+
+# exit    : 0

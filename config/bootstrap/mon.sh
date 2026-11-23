@@ -62,13 +62,24 @@ systemctl restart grafana-server
 # --- 백업: 15분마다 pg_dump (RPO 15분), 7일 보관 ---
 id backup-att >/dev/null 2>&1 || useradd --system --create-home --shell /usr/sbin/nologin backup-att
 install -d -o backup-att -g backup-att -m 700 /var/backups/att
-echo "${DATA_IP}:5432:*:att:${DB_PASSWORD}" > /home/backup-att/.pgpass
+# 6단계 수정: att_backup(읽기 전용 + BYPASSRLS)으로 덤프, 실패 시 깨진 파일을 남기지 않음
+# (scripts/live/backup-job-mon01.sh 와 같은 내용)
+cat > /home/backup-att/.pgpass <<CONF
+${DATA_IP}:5432:att:att_backup:${DB_PASSWORD}
+${DATA_IP}:5432:*:att:${DB_PASSWORD}
+CONF
 chown backup-att:backup-att /home/backup-att/.pgpass && chmod 600 /home/backup-att/.pgpass
 cat > /usr/local/bin/att-backup.sh <<CONF
 #!/usr/bin/env bash
 set -euo pipefail
+cd /   # 수동 실행 시 호출한 사용자의 폴더에 권한이 없어 find 가 실패하던 문제 (6단계)
 ts=\$(date +%Y%m%dT%H%M%S)
-pg_dump -h ${DATA_IP} -U att -Fc att > /var/backups/att/att-\$ts.dump
+tmp=/var/backups/att/.att-\$ts.dump.part
+trap 'rm -f "\$tmp"' EXIT
+# att_backup: 읽기 전용 + BYPASSRLS (앱 계정 att 는 FORCE RLS 때문에 덤프가 실패한다)
+pg_dump -h ${DATA_IP} -U att_backup -Fc att > "\$tmp"
+pg_restore --list "\$tmp" > /dev/null          # 읽을 수 있는 덤프인지 확인
+mv "\$tmp" /var/backups/att/att-\$ts.dump       # 성공한 것만 이름을 붙인다
 find /var/backups/att -name 'att-*.dump' -mtime +7 -delete
 echo "att_backup_last_success_timestamp \$(date +%s)" > /var/lib/prometheus/node-exporter/att_backup.prom.tmp
 mv /var/lib/prometheus/node-exporter/att_backup.prom.tmp /var/lib/prometheus/node-exporter/att_backup.prom
