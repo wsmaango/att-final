@@ -19,3 +19,10 @@ id = "att-tenant-api-key"
 description = "ATT 고객사 API 키 (att_ + 48자리 hex, rotate-tenant-key.sh 형식)"
 regex = '''\batt_[0-9a-f]{48}\b'''
 keywords = ["att_"]
+
+# S4 에서 추가: 데모 키(demo-key-tenant-N)는 k6·테스트에 공개된 연습용 값이고, 고객사 2 의 데모 키는 S4 에서 폐기했다.
+# 증거 파일의 curl 명령에 이 값이 찍혀 curl-auth-header 규칙이 걸리므로 이 값만 예외로 둔다.
+# 실제 키(att_ + 48자리 hex)나 다른 값은 그대로 탐지된다.
+[[allowlists]]
+description = "공개 데모 키 (운영 키 아님)"
+regexes = ['''^demo-key-tenant-[0-9]+$''']

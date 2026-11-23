@@ -1,0 +1,8 @@
+# command : gitleaks detect --source . --log-opts="--all" --redact --no-banner 2>&1 | tail -1; grep -rl "att_[0-9a-f]\{48\}" evidence/ || echo "증거 파일에 실제 키 없음"
+# time    : 2026-11-23T22:04:37+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+[90m10:04PM[0m [32mINF[0m [1mno leaks found[0m
+증거 파일에 실제 키 없음
+
+# exit    : 0
