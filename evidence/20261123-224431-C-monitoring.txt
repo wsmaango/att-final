@@ -1,0 +1,19 @@
+# command : export PROM=http://$MGMT:9090; ssh -p 2206 ubuntu@$MGMT "sudo promtool check rules /etc/prometheus/rules/att.yml | tail -1; echo \"대시보드 패널 수: \$(sudo jq \".panels|length\" /var/lib/grafana/dashboards/att-overview.json)\""
+scripts/promq.sh "count(up == 1)"; scripts/promq.sh "count(up == 0) or vector(0)"; scripts/promq.sh "att_db_up"; scripts/promq.sh "sum by (tenant) (att_tenant_requests_total)"
+# time    : 2026-11-23T22:44:31+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+
+대시보드 패널 수: 7
+query: count(up == 1)
+{}  11
+query: count(up == 0) or vector(0)
+{}  0
+query: att_db_up
+{"instance":"192.168.0.10:5000","job":"app"}  1
+{"instance":"192.168.0.11:5000","job":"app"}  1
+query: sum by (tenant) (att_tenant_requests_total)
+{"tenant":"1"}  5
+{"tenant":"2"}  2
+
+# exit    : 0

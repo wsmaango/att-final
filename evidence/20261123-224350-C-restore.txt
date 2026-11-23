@@ -1,0 +1,15 @@
+# command : scp -q -P 2206 tests/backup/restore-test.sh ubuntu@$MGMT:/tmp/ && ssh -p 2206 ubuntu@$MGMT "sudo -u backup-att bash /tmp/restore-test.sh 192.168.0.30"
+# time    : 2026-11-23T22:43:50+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+latest dump : /var/backups/att/att-20261123T134350.dump (2026-11-23 13:43:50 UTC, 313585 bytes)
+dump age    : 1 s  (= 지금 장애가 나면 잃는 최대 구간, RPO 실측)
+NOTICE:  database "att_restore_test" does not exist, skipping
+--- 고객사별 출근 기록 (덤프 시각 이전 기준): 원본 | 복원
+1 2  |  1 2
+employees(복원): 60000
+일치: 예
+restore_seconds=1
+임시 DB 삭제 완료
+
+# exit    : 0

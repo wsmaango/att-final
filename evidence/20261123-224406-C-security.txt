@@ -1,0 +1,33 @@
+# command : for p in 2201 2202 2203 2204 2205 2206; do ssh -p $p ubuntu@$MGMT "echo \"== \$(hostname): \$(sudo sshd -T | grep -E \"^x11forwarding\")\"; sudo ufw status | grep -E \"^(22|3000|9090)/tcp\""; done
+echo "--- app01 에서 옆 서버로"; ssh -p 2203 ubuntu@$MGMT "for t in 192.168.0.30:22 192.168.0.40:3000 192.168.0.30:5432; do nc -z -w 3 \${t%:*} \${t#*:} 2>/dev/null && echo \"\$t OPEN\" || echo \"\$t closed\"; done"
+# time    : 2026-11-23T22:44:06+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+== lb01: x11forwarding no
+22/tcp                     ALLOW       10.8.0.0/24                # SSH admin_cidrs only
+22/tcp                     ALLOW       10.0.10.44                 # SSH admin_cidrs only
+== lb02: x11forwarding no
+22/tcp                     ALLOW       10.8.0.0/24                # SSH admin_cidrs only
+22/tcp                     ALLOW       10.0.10.44                 # SSH admin_cidrs only
+== app01: x11forwarding no
+22/tcp                     ALLOW       10.8.0.0/24                # SSH admin_cidrs only
+22/tcp                     ALLOW       10.0.10.44                 # SSH admin_cidrs only
+== app02: x11forwarding no
+22/tcp                     ALLOW       10.8.0.0/24                # SSH admin_cidrs only
+22/tcp                     ALLOW       10.0.10.44                 # SSH admin_cidrs only
+== data01: x11forwarding no
+22/tcp                     ALLOW       10.8.0.0/24                # SSH admin_cidrs only
+22/tcp                     ALLOW       10.0.10.44                 # SSH admin_cidrs only
+== mon01: x11forwarding no
+22/tcp                     ALLOW       10.8.0.0/24                # SSH admin_cidrs only
+22/tcp                     ALLOW       10.0.10.44                 # SSH admin_cidrs only
+3000/tcp                   ALLOW       10.8.0.0/24                # Grafana admin_cidrs only
+9090/tcp                   ALLOW       10.8.0.0/24                # Prometheus UI admin_cidrs only
+3000/tcp                   ALLOW       10.0.10.44                 # Grafana admin_cidrs only
+9090/tcp                   ALLOW       10.0.10.44                 # Prometheus UI admin_cidrs only
+--- app01 에서 옆 서버로
+192.168.0.30:22 closed
+192.168.0.40:3000 closed
+192.168.0.30:5432 OPEN
+
+# exit    : 0

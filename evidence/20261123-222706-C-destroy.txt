@@ -1,0 +1,11 @@
+# command : cd terraform && terraform destroy -auto-approve 2>&1 | tail -n 5
+# time    : 2026-11-23T22:27:06+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+[0m[1mcloudstack_network.main: Destroying... [id=22662494-8fa6-442f-86d4-c77b8a651bff][0m[0m
+[0m[1mcloudstack_ssh_keypair.admin: Destruction complete after 0s[0m
+[0m[1mcloudstack_network.main: Destruction complete after 7s[0m
+[0m[1m[32m
+Destroy complete! Resources: 16 destroyed.[0m
+
+# exit    : 0

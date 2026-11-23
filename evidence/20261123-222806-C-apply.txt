@@ -1,0 +1,31 @@
+# command : cd terraform && terraform apply -auto-approve 2>&1 | tail -n 25
+# time    : 2026-11-23T22:28:06+09:00
+# host    : wons-3222323   cwd: /home/ubuntu/att-final
+
+Outputs:
+
+[0mdashboards = {
+  "grafana" = "http://10.0.1.87:3000"
+  "prometheus" = "http://10.0.1.87:9090"
+}
+entry_mode = "vr_lb"
+mgmt_ip = "10.0.1.87"
+private_ips = {
+  "app01" = "app 192.168.0.10"
+  "app02" = "app 192.168.0.11"
+  "data01" = "data 192.168.0.30"
+  "lb01" = "lb 192.168.0.20"
+  "lb02" = "lb 192.168.0.21"
+  "mon01" = "mon 192.168.0.40"
+}
+service_ip = "10.0.1.86"
+ssh_commands = {
+  "app01" = "ssh -p 2203 ubuntu@10.0.1.87"
+  "app02" = "ssh -p 2204 ubuntu@10.0.1.87"
+  "data01" = "ssh -p 2205 ubuntu@10.0.1.87"
+  "lb01" = "ssh -p 2201 ubuntu@10.0.1.87"
+  "lb02" = "ssh -p 2202 ubuntu@10.0.1.87"
+  "mon01" = "ssh -p 2206 ubuntu@10.0.1.87"
+}
+
+# exit    : 0
