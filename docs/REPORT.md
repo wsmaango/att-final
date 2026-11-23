@@ -78,7 +78,7 @@ flowchart TB
 | 고객사 분리 | `app/app.py` SCHEMA (RLS 정책) |
 | 출근 유실 방지 | `app/app.py` `spool_append` / `replay_spool_once` |
 
-[근거] 콘솔 자원 목록, `terraform output` 캡처
+[근거] `A3-console-public-ip.png`(공인 IP 2개, 서비스·관리), `A3-tf-output`(terraform output·state 16개 자원)
 
 ### 2.2 워크플로우 도식
 **요청 처리 흐름 (출근 체크)**
@@ -202,7 +202,8 @@ terraform destroy && terraform apply   # 재생성 → 같은 스모크 테스�
 1. **서버 지표와 사용자 체감이 달랐다.** 1회차에서 Grafana 의 출근 p95(앱 안쪽)는 약 85ms 였지만 k6(사용자 쪽)는 3.58초였다. 차이는 앱에 들어가기 전 줄 서서 기다린 시간이다. 대기열은 서버 지표에 안 잡히므로 사용자 쪽 측정이 필요하다.
 2. **처리 상한 = 동시 처리 수 ÷ 건당 시간.** 8건 ÷ 약 40ms ≈ 200 req/s — 1회차 그래프가 200 에서 평평해진 것과 맞는다.
 3. **서버를 2배로 늘린 효과(3배)보다 코드 한 곳(연결 풀)의 효과(58배)가 컸다.** 요청마다 PostgreSQL 에 새로 접속(TCP·SCRAM·fork)하던 것을 풀에서 재사용하도록 바꿨다(`a2632cc`). 고객사 분리는 `set_config(..., true)` 가 트랜잭션 범위라 연결을 재사용해도 안전하고, 이를 시험으로 확인했다.
-4. **CPU 가 병목 이동을 보여 준다** (각 구간 최대값, `4-run1-cpu`·`4-run2-cpu`): 1회차는 app01 81%·data01 78% 로 둘 다 높았고, app 을 2대로 늘린 2회차에는 app 이 51~55% 로 내려간 대신 **data01 이 99.5% 로 포화**됐다. app 을 늘려도 DB 가 접속 처리(인증·fork)에 CPU 를 다 써서 p95 가 1.17초에 머문 이유다. 연결 풀로 접속 자체를 없애자 3회차에서 목표를 달성했다. (3회차 CPU 는 따로 재지 않음.) Grafana 캡처 ①(20:15~20:50).
+4. Grafana: `4-grafana-run1/2/3.png`(회차별), `4-grafana-load-runs-all.png`(세 회차 비교).
+5. **CPU 가 병목 이동을 보여 준다** (각 구간 최대값, `4-run1-cpu`·`4-run2-cpu`): 1회차는 app01 81%·data01 78% 로 둘 다 높았고, app 을 2대로 늘린 2회차에는 app 이 51~55% 로 내려간 대신 **data01 이 99.5% 로 포화**됐다. app 을 늘려도 DB 가 접속 처리(인증·fork)에 CPU 를 다 써서 p95 가 1.17초에 머문 이유다. 연결 풀로 접속 자체를 없애자 3회차에서 목표를 달성했다. (3회차 CPU 는 따로 재지 않음.) Grafana 캡처 ①(20:15~20:50).
 
 ### 4.2 장애 주입과 페일오버 측정 (4)
 `MODE=clock tests/failover/measure.sh https://<service_ip> 180`
@@ -278,7 +279,10 @@ terraform destroy && terraform apply   # 재생성 → 같은 스모크 테스�
 | admin_cidrs 에 0.0.0.0/0 거부 | - | 거부되는지 확인 |
 | lb·app 각 2대 이상 | - | ✓ |
 
-CI(GitHub Actions)는 Solid Cloud 에 닿지 않으므로 mock provider 로 plan 을 만들어 검사한다 → API 키를 CI 에 넣지 않아도 된다. 위반 코드(`policies/tests/bad/`)가 실제로 걸리는지도 매번 확인. `TODO` Actions 캡처.
+CI(GitHub Actions)는 Solid Cloud 에 닿지 않으므로 mock provider 로 plan 을 만들어 검사한다 → API 키를 CI 에 넣지 않아도 된다. 위반 코드(`policies/tests/bad/`)가 실제로 걸리는지도 매번 확인.
+
+**실제 결과 (GitHub Actions, private 저장소):** 첫 실행(#1)은 `secrets` 작업이 실패했다. 작업 VM 에서 0건이던 gitleaks 가 CI 에서는 5건을 잡았는데, 모두 예외로 둔 테스트 더미값과 증거 파일 속 공개 데모 키였다. 액션의 기본 gitleaks 버전이 `.gitleaks.toml` 의 `[[allowlists]]` 형식을 적용하지 못한 것으로 보고, 워크플로에서 버전을 작업 VM 과 같은 8.30.1 로, 설정 파일을 명시적으로 고정했다. 두 번째 실행(#2)에서 terraform·secrets 모두 통과, "No leaks detected". 교훈: **검사 도구의 버전도 코드처럼 고정해야 로컬과 CI 결과가 같다.**
+[근거] `ci-actions-list.png`(#1 실패 → #2 성공), `ci-run2-summary.png`
 
 ### 5.4 시크릿 관리와 라이선스 (2)
 API 키는 환경변수, 앱 비밀번호는 `TF_VAR_*`, tfstate·tfvars 는 .gitignore, gitleaks(CI, 이력 전체). 오픈소스는 THIRD_PARTY.md.
