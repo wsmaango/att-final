@@ -31,7 +31,7 @@
 |-|-|-|-|-|
 |1|provider 버전을 범위로 지정 (0.6 이상 허용)|0.7.0 이 설치됐고, 학생 계정에서 오토스케일 그룹 조회가 실패하면 **nil 포인터로 패닉**|apply 중 스택 트레이스 `resource\_cloudstack\_loadbalancer\_rule.go:274`|`version = "0.5.0"` 고정, destroy 후 재배포 (`versions.tf` 주석)|
 |2|방화벽·egress 규칙을 VM 과 동시에 생성|VR(가상 라우터)은 첫 VM 이 뜰 때 생겨서, 그 전에 만든 규칙은 **530 오류**|apply 오류|`depends\_on` 으로 VM·LB 규칙 뒤로, `parallelism = 1`|
-|3|관리 대역(admin\_cidrs)에 본인 PC 의 인터넷 공인 IP 를 넣으라고 안내|서버에 보이는 출발지는 **작업 VM 의 10.0.10.44** 였다 → SSH 타임아웃. 고치는 sed 명령도 구분자(`#`)가 값에 들어 있어 실패해, 자리표시자가 tfvars 에 들어가 API 431 오류|서버에서 `$SSH\_CLIENT` 를 직접 찍어 확인|실제 출발지 측정 후 `10.0.10.44/32`, 치환은 python 으로 (`2-apply-admin\*`)|
+|3|관리 대역(admin\_cidrs)에 본인 PC 의 인터넷 공인 IP 를 넣으라고 안내|서버에 보이는 출발지는 **작업 VM 의 <WORK_VM_IP>** 였다 → SSH 타임아웃. 고치는 sed 명령도 구분자(`#`)가 값에 들어 있어 실패해, 자리표시자가 tfvars 에 들어가 API 431 오류|서버에서 `$SSH\_CLIENT` 를 직접 찍어 확인|실제 출발지 측정 후 `<WORK_VM_IP>/32`, 치환은 python 으로 (`2-apply-admin\*`)|
 |4|DB 장애 대응 차단기: 1초마다 **사용자 요청**으로 DB 복구를 시험|그 요청이 풀 타임아웃(1초)만큼 기다려 **장애 중 17\~20% 가 0.5초 초과**. 유실은 0 이라 기능 시험만으로는 안 보였다|측정 로그의 `time\_total` 분포, Grafana 출근 p95 1.7초|복구 판단을 3초마다 도는 백그라운드 확인으로 이동 → 0.3% (`3bd358e`)|
 |5|고객사 분리를 위해 테이블에 `FORCE ROW LEVEL SECURITY` + 백업은 소유자(att)로 `pg\_dump`|FORCE 는 소유자에게도 적용돼 **pg\_dump 가 매번 실패**. 실패해도 8KB 파일이 15분마다 생겨 정상처럼 보였고, 경보는 "성공 0회" 를 평가하지 못함. 복구 스크립트는 이전 주제의 `reservations` 테이블을 세고 있었다|복구 리허설 준비 중 스크립트 검토 → 서버에서 직접 실행해 RLS 오류 확인|읽기 전용 + BYPASSRLS 백업 역할, 실패 덤프 삭제, `BackupNeverSucceeded`, 복구 스크립트 재작성 (`9610586`)|
 |6|SLI `att:error\_ratio:5m` = 5xx 비율|5xx 가 한 번도 없으면 분자 시계열이 없어 **"No data"** — 오류 0 과 데이터 없음이 구분 안 됨|Grafana 패널이 비어 있음|`or vector(0)` (`alerts.yml`)|

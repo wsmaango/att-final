@@ -1,4 +1,4 @@
-# command : scripts/smoke-test.sh 10.0.1.86
+# command : scripts/smoke-test.sh <SERVICE_IP>
 # time    : 2026-11-23T21:11:32+09:00
 # host    : wons-3222323   cwd: /home/ubuntu/att-final
 

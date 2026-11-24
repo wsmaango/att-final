@@ -1,4 +1,4 @@
-# command : { echo "ADMIN_CIDRS=\"10.8.0.0/24 10.0.10.44/32\""; cat scripts/live/ufw-admin-only.sh; } | ssh -p 2204 ubuntu@$MGMT "sudo bash -s"
+# command : { echo "ADMIN_CIDRS=\"10.8.0.0/24 <WORK_VM_IP>/32\""; cat scripts/live/ufw-admin-only.sh; } | ssh -p 2204 ubuntu@$MGMT "sudo bash -s"
 # time    : 2026-11-23T21:33:38+09:00
 # host    : wons-3222323   cwd: /home/ubuntu/att-final
 
@@ -11,7 +11,7 @@ To                         Action      From
 5000/tcp                   ALLOW       192.168.0.21               # API from lb
 5000/tcp                   ALLOW       192.168.0.40               # /metrics from mon
 22/tcp                     ALLOW       10.8.0.0/24                # SSH admin_cidrs only
-22/tcp                     ALLOW       10.0.10.44                 # SSH admin_cidrs only
+22/tcp                     ALLOW       <WORK_VM_IP>                 # SSH admin_cidrs only
 
 x11forwarding no
 

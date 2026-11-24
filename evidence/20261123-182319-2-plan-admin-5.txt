@@ -61,7 +61,7 @@ Terraform will perform the following actions:
         }
       [32m+[0m[0m rule {
           [32m+[0m[0m cidr_list = [
-              [32m+[0m[0m "10.0.10.44/32",
+              [32m+[0m[0m "<WORK_VM_IP>/32",
               [32m+[0m[0m "10.8.0.0/24",
             ]
           [32m+[0m[0m icmp_code = (known after apply)

@@ -144,7 +144,7 @@ sequenceDiagram
 
 \[근거] 외부 스캔 `7-port-scan` (서비스 IP 는 80·443 만, 관리 IP 는 2201·3000·9090 만 OPEN, 5432·6379 closed), ufw `7-ufw-all` → 개선 후 `7-ufw-rest`·`7-ufw-mon01-fix`, **내부 이동 시험** `7-lateral`·`C-lateral`(app01 에서 data01:22·mon01:3000 closed, data01:5432 만 OPEN), 재생성 후 `C-security`
 
-**발견과 조치:** 처음에는 서버 ufw 가 22·3000·9090 을 `Anywhere` 로 열고 VR 방화벽만 믿었다. app 한 대가 뚫리면 내부에서 다른 서버 SSH 로 바로 갈 수 있는 구조였다. VR 포트포워딩이 출발지 IP 를 보존하는 것(`SSH\\\_CLIENT=10.0.10.44`)을 확인한 뒤, 서버 ufw 도 `admin\\\_cidrs` 로 좁혔다(`common.sh`, `mon.sh`, `scripts/live/ufw-admin-only.sh`). 잘못 적용하면 접속이 끊기므로 3분 뒤 자동 원복 타이머를 걸고 한 대씩 적용했다.
+**발견과 조치:** 처음에는 서버 ufw 가 22·3000·9090 을 `Anywhere` 로 열고 VR 방화벽만 믿었다. app 한 대가 뚫리면 내부에서 다른 서버 SSH 로 바로 갈 수 있는 구조였다. VR 포트포워딩이 출발지 IP 를 보존하는 것(`SSH\\\_CLIENT=<WORK_VM_IP>`)을 확인한 뒤, 서버 ufw 도 `admin\\\_cidrs` 로 좁혔다(`common.sh`, `mon.sh`, `scripts/live/ufw-admin-only.sh`). 잘못 적용하면 접속이 끊기므로 3분 뒤 자동 원복 타이머를 걸고 한 대씩 적용했다.
 
 ### 2.6 대안 비교와 트레이드오프 (3)
 

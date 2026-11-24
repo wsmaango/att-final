@@ -1,4 +1,4 @@
-# command : ssh -o StrictHostKeyChecking=accept-new -p 2201 ubuntu@10.0.1.86 'cloud-init status --wait; sudo ufw status numbered; sudo sshd -T | grep -E "passwordauthentication|permitrootlogin"'
+# command : ssh -o StrictHostKeyChecking=accept-new -p 2201 ubuntu@<SERVICE_IP> 'cloud-init status --wait; sudo ufw status numbered; sudo sshd -T | grep -E "passwordauthentication|permitrootlogin"'
 # time    : 2026-11-23T18:24:17+09:00
 # host    : wons-3222323   cwd: /home/ubuntu/att-final
 

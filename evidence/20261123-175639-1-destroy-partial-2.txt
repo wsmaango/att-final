@@ -126,7 +126,7 @@ Terraform will perform the following actions:
 [1m  # cloudstack_ipaddress.mgmt[0m will be [1m[31mdestroyed[0m
 [0m  [31m-[0m[0m resource "cloudstack_ipaddress" "mgmt" {
       [31m-[0m[0m id            = "d4e2558b-e773-4528-9c30-849032852c80" [90m-> null[0m[0m
-      [31m-[0m[0m ip_address    = "10.0.1.86" [90m-> null[0m[0m
+      [31m-[0m[0m ip_address    = "<SERVICE_IP>" [90m-> null[0m[0m
       [31m-[0m[0m is_portable   = false [90m-> null[0m[0m
       [31m-[0m[0m is_source_nat = true [90m-> null[0m[0m
       [31m-[0m[0m network_id    = "1d0b75c8-1a7d-4e06-9665-768b97a4d928" [90m-> null[0m[0m
@@ -143,7 +143,7 @@ Terraform will perform the following actions:
 [1m  # cloudstack_ipaddress.service[0m will be [1m[31mdestroyed[0m
 [0m  [31m-[0m[0m resource "cloudstack_ipaddress" "service" {
       [31m-[0m[0m id            = "be3ab68b-95e9-4cf4-aa0b-3113d6480fec" [90m-> null[0m[0m
-      [31m-[0m[0m ip_address    = "10.0.1.87" [90m-> null[0m[0m
+      [31m-[0m[0m ip_address    = "<MGMT_IP>" [90m-> null[0m[0m
       [31m-[0m[0m is_portable   = false [90m-> null[0m[0m
       [31m-[0m[0m is_source_nat = false [90m-> null[0m[0m
       [31m-[0m[0m network_id    = "1d0b75c8-1a7d-4e06-9665-768b97a4d928" [90m-> null[0m[0m
@@ -199,7 +199,7 @@ Changes to Outputs:
       [31m-[0m[0m lb02   = "lb 192.168.0.21"
       [31m-[0m[0m mon01  = "mon 192.168.0.40"
     } [90m-> null[0m[0m
-  [31m-[0m[0m service_ip  = "10.0.1.87" [90m-> null[0m[0m
+  [31m-[0m[0m service_ip  = "<MGMT_IP>" [90m-> null[0m[0m
 [0m[1mcloudstack_ipaddress.mgmt: Destroying... [id=d4e2558b-e773-4528-9c30-849032852c80][0m[0m
 [0m[1mcloudstack_ipaddress.service: Destroying... [id=be3ab68b-95e9-4cf4-aa0b-3113d6480fec][0m[0m
 [0m[1mcloudstack_instance.node["data01"]: Destroying... [id=2333dd99-1718-47dd-af69-30ee12076566][0m[0m

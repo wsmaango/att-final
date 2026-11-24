@@ -1,4 +1,4 @@
-# command : ssh -p 2206 ubuntu@10.0.1.86 'systemctl is-active prometheus grafana-server; sudo ls -lt /var/backups/att | head -3'
+# command : ssh -p 2206 ubuntu@<SERVICE_IP> 'systemctl is-active prometheus grafana-server; sudo ls -lt /var/backups/att | head -3'
 # time    : 2026-11-23T18:27:39+09:00
 # host    : wons-3222323   cwd: /home/ubuntu/att-final
 

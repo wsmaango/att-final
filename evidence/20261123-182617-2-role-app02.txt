@@ -1,4 +1,4 @@
-# command : ssh -p 2204 ubuntu@10.0.1.86 'systemctl is-active att-app; curl -s http://192.168.0.11:5000/readyz; echo'
+# command : ssh -p 2204 ubuntu@<SERVICE_IP> 'systemctl is-active att-app; curl -s http://192.168.0.11:5000/readyz; echo'
 # time    : 2026-11-23T18:26:17+09:00
 # host    : wons-3222323   cwd: /home/ubuntu/att-final
 

@@ -1,4 +1,4 @@
-# command : ssh -p 2205 ubuntu@10.0.1.86 'systemctl is-active postgresql redis-server; sudo ss -tlnp | grep -E ":5432|:6379"'
+# command : ssh -p 2205 ubuntu@<SERVICE_IP> 'systemctl is-active postgresql redis-server; sudo ss -tlnp | grep -E ":5432|:6379"'
 # time    : 2026-11-23T18:26:18+09:00
 # host    : wons-3222323   cwd: /home/ubuntu/att-final
 

@@ -1,4 +1,4 @@
-# command : tests/failover/verify-no-loss.sh evidence/20261123-211144-5-fail-db-v3.txt 10.0.1.87
+# command : tests/failover/verify-no-loss.sh evidence/20261123-211144-5-fail-db-v3.txt <MGMT_IP>
 # time    : 2026-11-23T21:13:52+09:00
 # host    : wons-3222323   cwd: /home/ubuntu/att-final
 

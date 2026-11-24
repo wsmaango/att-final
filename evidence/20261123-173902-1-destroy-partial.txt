@@ -170,7 +170,7 @@ Terraform will perform the following actions:
 [1m  # cloudstack_ipaddress.mgmt[0m will be [1m[31mdestroyed[0m
 [0m  [31m-[0m[0m resource "cloudstack_ipaddress" "mgmt" {
       [31m-[0m[0m id            = "d4e2558b-e773-4528-9c30-849032852c80" [90m-> null[0m[0m
-      [31m-[0m[0m ip_address    = "10.0.1.86" [90m-> null[0m[0m
+      [31m-[0m[0m ip_address    = "<SERVICE_IP>" [90m-> null[0m[0m
       [31m-[0m[0m is_portable   = false [90m-> null[0m[0m
       [31m-[0m[0m is_source_nat = true [90m-> null[0m[0m
       [31m-[0m[0m network_id    = "f3e7941a-8240-4b0d-b063-004367839b36" [90m-> null[0m[0m
@@ -187,7 +187,7 @@ Terraform will perform the following actions:
 [1m  # cloudstack_ipaddress.service[0m will be [1m[31mdestroyed[0m
 [0m  [31m-[0m[0m resource "cloudstack_ipaddress" "service" {
       [31m-[0m[0m id            = "be3ab68b-95e9-4cf4-aa0b-3113d6480fec" [90m-> null[0m[0m
-      [31m-[0m[0m ip_address    = "10.0.1.87" [90m-> null[0m[0m
+      [31m-[0m[0m ip_address    = "<MGMT_IP>" [90m-> null[0m[0m
       [31m-[0m[0m is_portable   = false [90m-> null[0m[0m
       [31m-[0m[0m is_source_nat = false [90m-> null[0m[0m
       [31m-[0m[0m network_id    = "f3e7941a-8240-4b0d-b063-004367839b36" [90m-> null[0m[0m
@@ -235,11 +235,11 @@ Terraform will perform the following actions:
 
 Changes to Outputs:
   [31m-[0m[0m dashboards   = {
-      [31m-[0m[0m grafana    = "http://10.0.1.86:3000"
-      [31m-[0m[0m prometheus = "http://10.0.1.86:9090"
+      [31m-[0m[0m grafana    = "http://<SERVICE_IP>:3000"
+      [31m-[0m[0m prometheus = "http://<SERVICE_IP>:9090"
     } [90m-> null[0m[0m
   [31m-[0m[0m entry_mode   = "vr_lb" [90m-> null[0m[0m
-  [31m-[0m[0m mgmt_ip      = "10.0.1.86" [90m-> null[0m[0m
+  [31m-[0m[0m mgmt_ip      = "<SERVICE_IP>" [90m-> null[0m[0m
   [31m-[0m[0m private_ips  = {
       [31m-[0m[0m app01  = "app 192.168.0.10"
       [31m-[0m[0m app02  = "app 192.168.0.11"
@@ -248,14 +248,14 @@ Changes to Outputs:
       [31m-[0m[0m lb02   = "lb 192.168.0.21"
       [31m-[0m[0m mon01  = "mon 192.168.0.40"
     } [90m-> null[0m[0m
-  [31m-[0m[0m service_ip   = "10.0.1.87" [90m-> null[0m[0m
+  [31m-[0m[0m service_ip   = "<MGMT_IP>" [90m-> null[0m[0m
   [31m-[0m[0m ssh_commands = {
-      [31m-[0m[0m app01  = "ssh -p 2203 ubuntu@10.0.1.86"
-      [31m-[0m[0m app02  = "ssh -p 2204 ubuntu@10.0.1.86"
-      [31m-[0m[0m data01 = "ssh -p 2205 ubuntu@10.0.1.86"
-      [31m-[0m[0m lb01   = "ssh -p 2201 ubuntu@10.0.1.86"
-      [31m-[0m[0m lb02   = "ssh -p 2202 ubuntu@10.0.1.86"
-      [31m-[0m[0m mon01  = "ssh -p 2206 ubuntu@10.0.1.86"
+      [31m-[0m[0m app01  = "ssh -p 2203 ubuntu@<SERVICE_IP>"
+      [31m-[0m[0m app02  = "ssh -p 2204 ubuntu@<SERVICE_IP>"
+      [31m-[0m[0m data01 = "ssh -p 2205 ubuntu@<SERVICE_IP>"
+      [31m-[0m[0m lb01   = "ssh -p 2201 ubuntu@<SERVICE_IP>"
+      [31m-[0m[0m lb02   = "ssh -p 2202 ubuntu@<SERVICE_IP>"
+      [31m-[0m[0m mon01  = "ssh -p 2206 ubuntu@<SERVICE_IP>"
     } [90m-> null[0m[0m
 [0m[1mcloudstack_firewall.mgmt: Destroying... [id=d4e2558b-e773-4528-9c30-849032852c80][0m[0m
 [0m[1mcloudstack_instance.node["app02"]: Destroying... [id=7b9199e2-9215-4ae9-ae2e-9c33b674d3b4][0m[0m

@@ -2,17 +2,17 @@
 # time    : 2026-11-23T21:29:52+09:00
 # host    : wons-3222323   cwd: /home/ubuntu/att-final
 
-10.0.1.86  80    OPEN
-10.0.1.86  443   OPEN
-10.0.1.86  22    closed
-10.0.1.86  5432  closed
-10.0.1.86  6379  closed
-10.0.1.86  3000  closed
-10.0.1.86  9090  closed
-10.0.1.87  2201  OPEN
-10.0.1.87  3000  OPEN
-10.0.1.87  9090  OPEN
-10.0.1.87  5432  closed
-10.0.1.87  80    closed
+<SERVICE_IP>  80    OPEN
+<SERVICE_IP>  443   OPEN
+<SERVICE_IP>  22    closed
+<SERVICE_IP>  5432  closed
+<SERVICE_IP>  6379  closed
+<SERVICE_IP>  3000  closed
+<SERVICE_IP>  9090  closed
+<MGMT_IP>  2201  OPEN
+<MGMT_IP>  3000  OPEN
+<MGMT_IP>  9090  OPEN
+<MGMT_IP>  5432  closed
+<MGMT_IP>  80    closed
 
 # exit    : 0

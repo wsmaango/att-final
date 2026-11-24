@@ -1,4 +1,4 @@
-# command : k6 run -q -e BASE=https://10.0.1.86 tests/load/k6-clock-rush.js
+# command : k6 run -q -e BASE=https://<SERVICE_IP> tests/load/k6-clock-rush.js
 # time    : 2026-11-23T20:19:07+09:00
 # host    : wons-3222323   cwd: /home/ubuntu/att-final
 

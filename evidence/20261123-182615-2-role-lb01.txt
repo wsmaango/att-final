@@ -1,4 +1,4 @@
-# command : ssh -p 2201 ubuntu@10.0.1.86 'systemctl is-active nginx prometheus-nginx-exporter; curl -sk https://localhost/readyz; echo'
+# command : ssh -p 2201 ubuntu@<SERVICE_IP> 'systemctl is-active nginx prometheus-nginx-exporter; curl -sk https://localhost/readyz; echo'
 # time    : 2026-11-23T18:26:15+09:00
 # host    : wons-3222323   cwd: /home/ubuntu/att-final
 

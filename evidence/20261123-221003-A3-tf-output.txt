@@ -3,11 +3,11 @@
 # host    : wons-3222323   cwd: /home/ubuntu/att-final
 
 dashboards = {
-  "grafana" = "http://10.0.1.87:3000"
-  "prometheus" = "http://10.0.1.87:9090"
+  "grafana" = "http://<MGMT_IP>:3000"
+  "prometheus" = "http://<MGMT_IP>:9090"
 }
 entry_mode = "vr_lb"
-mgmt_ip = "10.0.1.87"
+mgmt_ip = "<MGMT_IP>"
 private_ips = {
   "app01" = "app 192.168.0.10"
   "app02" = "app 192.168.0.11"
@@ -16,14 +16,14 @@ private_ips = {
   "lb02" = "lb 192.168.0.21"
   "mon01" = "mon 192.168.0.40"
 }
-service_ip = "10.0.1.86"
+service_ip = "<SERVICE_IP>"
 ssh_commands = {
-  "app01" = "ssh -p 2203 ubuntu@10.0.1.87"
-  "app02" = "ssh -p 2204 ubuntu@10.0.1.87"
-  "data01" = "ssh -p 2205 ubuntu@10.0.1.87"
-  "lb01" = "ssh -p 2201 ubuntu@10.0.1.87"
-  "lb02" = "ssh -p 2202 ubuntu@10.0.1.87"
-  "mon01" = "ssh -p 2206 ubuntu@10.0.1.87"
+  "app01" = "ssh -p 2203 ubuntu@<MGMT_IP>"
+  "app02" = "ssh -p 2204 ubuntu@<MGMT_IP>"
+  "data01" = "ssh -p 2205 ubuntu@<MGMT_IP>"
+  "lb01" = "ssh -p 2201 ubuntu@<MGMT_IP>"
+  "lb02" = "ssh -p 2202 ubuntu@<MGMT_IP>"
+  "mon01" = "ssh -p 2206 ubuntu@<MGMT_IP>"
 }
 --- state
 cloudstack_egress_firewall.main
